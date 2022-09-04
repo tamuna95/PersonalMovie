@@ -8,6 +8,7 @@
 import Foundation
 
 class MovieViewModel {
+   private var isLoading: Bool = false
    private  var movie : MovieModel
     init(movie : MovieModel){
         self.movie = movie
@@ -16,8 +17,8 @@ class MovieViewModel {
     var title : String {
         movie.title
     }
-    var imdb : String {
-        String(movie.rating)
+    var imdb : Double {
+        movie.rating
         
     }
     var releaseDate : String {
@@ -26,4 +27,8 @@ class MovieViewModel {
     var posterPath : String {
         movie.posterPath
     }
+    var overview : String {
+        movie.overview
+    }
+    
 }

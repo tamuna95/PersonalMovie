@@ -14,8 +14,8 @@ protocol MovieListViewModelProtocol: AnyObject {
 }
 
 class MovieListViewModel : MovieListViewModelProtocol {
-    
     let moviesManager : MoviesManagerProtocol
+    
     func getMoviesList(url: String,completion: @escaping (([MovieViewModel]) -> Void)) {
         moviesManager.fetchMovies(url : url) { movie in
             DispatchQueue.main.async {
@@ -30,3 +30,4 @@ class MovieListViewModel : MovieListViewModelProtocol {
     }
     
 }
+

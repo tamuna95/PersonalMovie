@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1826422028C4E65300942A11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826421F28C4E65300942A11 /* MovieDetailViewController.swift */; };
 		18FC73F328BF9A4D00C33143 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC73F228BF9A4D00C33143 /* AppDelegate.swift */; };
 		18FC73F528BF9A4D00C33143 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC73F428BF9A4D00C33143 /* SceneDelegate.swift */; };
 		18FC73FA28BF9A4D00C33143 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FC73F828BF9A4D00C33143 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1826421F28C4E65300942A11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		18FC73EF28BF9A4D00C33143 /* PersonalMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FC73F228BF9A4D00C33143 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18FC73F428BF9A4D00C33143 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				18FC741228C07C2300C33143 /* MoviesViewController.swift */,
 				18FC73FD28BF9A5100C33143 /* LaunchScreen.storyboard */,
 				18FC73F828BF9A4D00C33143 /* Main.storyboard */,
+				1826421F28C4E65300942A11 /* MovieDetailViewController.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				18FC73EB28BF9A4D00C33143 /* Sources */,
 				18FC73EC28BF9A4D00C33143 /* Frameworks */,
 				18FC73ED28BF9A4D00C33143 /* Resources */,
+				A3CD5F568851189F0230AA06 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -300,6 +304,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A3CD5F568851189F0230AA06 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalMovieApp/Pods-PersonalMovieApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PersonalMovieApp/Pods-PersonalMovieApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PersonalMovieApp/Pods-PersonalMovieApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -311,6 +332,7 @@
 				18FC740F28BF9BE500C33143 /* MovieModel.swift in Sources */,
 				18FC741928C0830A00C33143 /* MoviesDataSource.swift in Sources */,
 				18FC740A28BF9AB100C33143 /* NetworkManager.swift in Sources */,
+				1826422028C4E65300942A11 /* MovieDetailViewController.swift in Sources */,
 				18FC740C28BF9AF500C33143 /* MovieManager.swift in Sources */,
 				18FC742528C0D51200C33143 /* ImageViewExtension.swift in Sources */,
 				18FC73F328BF9A4D00C33143 /* AppDelegate.swift in Sources */,

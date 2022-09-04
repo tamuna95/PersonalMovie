@@ -6,9 +6,10 @@
 //
 
 import UIKit
-
+import Cosmos
 class MoviesTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var ratinngCosmosView: CosmosView!
     @IBOutlet weak var imdbLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var MovieImageView: UIImageView!
@@ -25,8 +26,16 @@ class MoviesTableViewCell: UITableViewCell {
 
     func configure(with item : MovieViewModel) {
         movieTitleLabel.text = item.title
-        imdbLabel.text = "Imdb⭐️ \(item.imdb)"
-        releaseDateLabel.text = "Release Date \(item.releaseDate)"
+        imdbLabel.text = String(item.imdb)
+        releaseDateLabel.text = "Release Date: \(item.releaseDate)"
         MovieImageView.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(item.posterPath)", placeHolderImage: UIImage(named: "placeholder.png")!)
+        ratinngCosmosView.rating = item.imdb / 2
+
+        disableRating()
     }
+    func disableRating(){
+        ratinngCosmosView.settings.updateOnTouch = false
+
+    }
+   
 }
