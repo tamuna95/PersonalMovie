@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class MoviesDataSource : NSObject{
-    
+     var movieSearchBar : UISearchBar
     private var moviesTableView: UITableView
     private var moviesViewModel: MovieListViewModelProtocol
     private var moviesList: [MovieViewModel] = []
@@ -17,12 +17,14 @@ class MoviesDataSource : NSObject{
     private var nowPlayingMovieList : [MovieViewModel] = []
     private var popularMovieList : [MovieViewModel] = []
     private var urlItems : String
+    var filteredMovies: [MovieViewModel] = []
+    var searching = false
     
-    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,urlItems : String){
+    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,urlItems : String,movieSearchBar : UISearchBar){
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
         self.urlItems = urlItems
-
+        self.movieSearchBar = movieSearchBar
         super.init()
         setUpDelegates()
     }
@@ -32,16 +34,14 @@ class MoviesDataSource : NSObject{
         self.moviesTableView.delegate = self
     }
     
-     func refresh() {
+    func refresh() {
         moviesViewModel.getMoviesList(url: urlItems, completion: { movie in
             self.moviesList.append(contentsOf: movie)
             self.moviesTableView.reloadData()
         })
     }
+//    MARK :- Get popular and Top_rated movies functions
     
-    func getMovies(){
-        
-    }
     func getTopRatedMovieList(){
         moviesViewModel.getMoviesList(url: urlItems,completion: { movie in
             self.moviesList = self.topRatedMovieList
@@ -49,18 +49,7 @@ class MoviesDataSource : NSObject{
             self.moviesTableView.reloadData()
             print(self.moviesList.first?.title)
         })
-        
-        
     }
-    
-//    func getMovies(with array: [MovieViewModel]){
-//        moviesViewModel.getMoviesList(url: urlItems,completion: { movie in
-//            self.moviesList = array
-//            self.moviesList.append(contentsOf: movie)
-//            self.moviesTableView.reloadData()
-//            print(self.moviesList.first?.title)
-//    })
-//    }
     
     func getPopularMovieList(){
         moviesViewModel.getMoviesList(url: urlItems,completion: { movie in
@@ -68,9 +57,14 @@ class MoviesDataSource : NSObject{
             self.moviesList.append(contentsOf: movie)
             self.moviesTableView.reloadData()
             print(self.moviesList.first?.title)
-    })
+        })
     }
+    
+    
+    
 }
+
+// MARK :- DataSource class extensions
 
 extension MoviesDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,22 +74,45 @@ extension MoviesDataSource : UITableViewDelegate {
 
 extension MoviesDataSource : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        moviesList.count
+        if searching {
+            return filteredMovies.count
+        }
+        else {
+          return moviesList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let movie = moviesList[indexPath.row]
+        var movie = moviesList[indexPath.row]
+
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MoviesTableViewCell
         else {
-            fatalError("Cannot deque cell with identifier: MovieCell")
+            fatalError("Cannot dequeue cell with identifier: MovieCell")
+        }
+        if searching {
+            movie = filteredMovies[indexPath.row]
+            cell.configure(with: movie)
+
         }
         cell.configure(with: movie)
+        movieSearchBar.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
     }
-    }
+    
+    
+}
 
+//MARK :- Protocol for Search Bar
+extension MoviesDataSource : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
+        searching = true
+        moviesTableView.reloadData()
+    }
+    
+}

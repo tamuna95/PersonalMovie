@@ -143,8 +143,9 @@
                     <navigationItem key="navigationItem" title="Movies" id="R4u-bt-1Dl"/>
                     <connections>
                         <outlet property="moviesTableView" destination="6nL-iU-Dw6" id="4hj-Di-9FF"/>
-                        <outlet property="nowPlayingLabel" destination="pFN-5D-s6A" id="6f5-Sq-HgB"/>
+                        <outlet property="nowPlayingLabel" destination="pFN-5D-s6A" id="2R6-AH-aj0"/>
                         <outlet property="popularLabel" destination="TyH-wP-deD" id="kPg-JR-xsh"/>
+                        <outlet property="searchMovie" destination="ckK-B4-DQe" id="2k4-Jd-cQi"/>
                         <outlet property="topRatedLabel" destination="lyZ-lp-qSP" id="jTO-ow-n9B"/>
                     </connections>
                 </viewController>
