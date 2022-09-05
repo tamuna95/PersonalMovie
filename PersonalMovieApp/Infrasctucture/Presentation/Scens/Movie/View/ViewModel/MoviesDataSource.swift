@@ -10,20 +10,22 @@ import UIKit
 
 protocol passingDataProtocol {
     func fetchMovie(indexpath : IndexPath)
+    func prepare(for segue: UIStoryboardSegue, sender: Any?)
 }
+
+
 class MoviesDataSource : NSObject {
     var movieSearchBar : UISearchBar
-    var selectedMovieIndex: Int = 0
+    var selectedMovieGenre : [Int] = []
     private var moviesTableView: UITableView
     private var moviesViewModel: MovieListViewModelProtocol
-     var moviesList: [MovieViewModel] = []
-    private var topRatedMovieList : [MovieViewModel] = []
-    private var nowPlayingMovieList : [MovieViewModel] = []
-    private var popularMovieList : [MovieViewModel] = []
+    var moviesList: [MovieViewModel] = []
     private var urlItems : String
     var filteredMovies: [MovieViewModel] = []
     var searching = false
     var passingDataDelegate : passingDataProtocol!
+    var movieId : Int = 0
+    
     
     init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,urlItems : String,movieSearchBar : UISearchBar){
         self.moviesTableView = moviesTableView
@@ -40,39 +42,23 @@ class MoviesDataSource : NSObject {
         
     }
     
-    func refresh() {
-        moviesViewModel.getMoviesList(url: urlItems, completion: { movie in
+    func refresh(url : String) {
+        moviesViewModel.getList(url: url, completion: { movie in
             self.moviesList.append(contentsOf: movie)
             self.moviesTableView.reloadData()
         })
     }
-//    MARK :- Get popular and Top_rated movies functions
-    
-    func getTopRatedMovieList(){
-        moviesViewModel.getMoviesList(url: urlItems,completion: { movie in
-            self.moviesList = self.topRatedMovieList
-            self.moviesTableView.reloadData()
-            print(self.moviesList.count)
-        })
-    }
-    
-    func getPopularMovieList(){
-        moviesViewModel.getMoviesList(url: urlItems,completion: { movie in
-            self.moviesList = self.popularMovieList
-            self.moviesTableView.reloadData()
-        })
-    }
-
-    
 }
 
 // MARK :- DataSource class extensions
 
 extension MoviesDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(moviesList[indexPath.row].imdb)
+        print("top rated \(moviesList[indexPath.row].title)")
         passingDataDelegate.fetchMovie(indexpath: indexPath)
-        
+        selectedMovieGenre = moviesList[indexPath.row].id
+        print(selectedMovieGenre)
+        movieId = moviesList[indexPath.row].movieID
     }
 }
 
@@ -101,6 +87,7 @@ extension MoviesDataSource : UITableViewDataSource {
         }
         cell.configure(with: movie)
         movieSearchBar.delegate = self
+        
         return cell
     }
     

@@ -30,5 +30,24 @@ class MovieViewModel {
     var overview : String {
         movie.overview
     }
-    
+    var id : [Int] {
+        movie.id
+    }
+    var movieID : Int {
+        movie.movieID
+    }
+
+}
+
+class GenreViewModel {
+    private var genre : Genres
+    init(genre : Genres) {
+        self.genre = genre
+    }
+    var id : Int {
+        genre.id
+    }
+    var name : String {
+        genre.name
+    }
 }

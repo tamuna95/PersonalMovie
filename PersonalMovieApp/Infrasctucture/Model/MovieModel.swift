@@ -12,7 +12,7 @@ struct MovieRequest : Codable {
 }
 struct MovieModel: Codable {
     
-    let id: Int
+    let id: [Int]
     let posterPath: String
     var videoPath: String?
     let backdrop: String
@@ -20,13 +20,14 @@ struct MovieModel: Codable {
     var releaseDate: String
     var rating: Double
     let overview: String
-    
+    let movieID : Int
     private enum CodingKeys: String, CodingKey {
-        case id,
+        case id = "genre_ids",
              posterPath = "poster_path",
              videoPath,
              backdrop = "backdrop_path",
              title,
+             movieID = "id",
              releaseDate = "release_date",
              rating = "vote_average",
              overview
@@ -34,4 +35,13 @@ struct MovieModel: Codable {
     
     
     
+}
+
+struct GenreModel: Codable {
+    let genres : [Genres]
+}
+
+struct Genres: Codable {
+    let id: Int
+    let name: String
 }

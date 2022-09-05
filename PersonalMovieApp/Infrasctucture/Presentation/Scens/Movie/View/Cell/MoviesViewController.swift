@@ -27,7 +27,7 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         designButton()
         configureViewModel()
-        dataSource.refresh()
+        dataSource.refresh(url: url.nowPlaying)
         moviesTableView.refreshControl = UIRefreshControl()
         moviesTableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         dataSource.passingDataDelegate = self
@@ -44,24 +44,20 @@ class MoviesViewController: UIViewController {
     
     @IBAction func popularButtonDidTap(_ sender: Any) {
         configureMovie()
-
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.popular, movieSearchBar: searchMovie)
-        dataSource.getPopularMovieList()
-        dataSource.refresh()
+        dataSource.refresh(url: url.popular)
+        
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.topRated, movieSearchBar: searchMovie)
-        dataSource.getTopRatedMovieList()
-        dataSource.refresh()
+        dataSource.refresh(url: url.topRated)
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.nowPlaying, movieSearchBar: searchMovie)
-        configureViewModel()
-        dataSource.refresh()
-        
+        dataSource.refresh(url: url.nowPlaying)
     }
     
     private func configureViewModel() {
@@ -80,9 +76,8 @@ class MoviesViewController: UIViewController {
 }
 extension MoviesViewController : passingDataProtocol {
     func fetchMovie(indexpath: IndexPath) {
+        indexPathArry.append(indexpath)
         performSegue(withIdentifier: "DetailPage", sender: nil)
-//        indexPathArry.append(indexpath)
-         moviesTableView.reloadData()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailPage" {
@@ -91,8 +86,10 @@ extension MoviesViewController : passingDataProtocol {
                 destinationVC?.movieImdbField = String(dataSource.moviesList[i.row].imdb)
                 destinationVC?.movieNameFiled = String(dataSource.moviesList[i.row].title)
                 destinationVC?.movieOverviewField = String(dataSource.moviesList[i.row].overview)
+                destinationVC?.movieRateField = dataSource.moviesList[i.row].imdb / 2
+                destinationVC?.movieImageField = dataSource.moviesList[i.row].posterPath
+                destinationVC?.selectedMovieGenres = dataSource.moviesList[i.row].id
             }
         }
-            
     }
 }
