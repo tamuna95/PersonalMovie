@@ -68,13 +68,13 @@ extension MoviesDataSource : UITableViewDataSource {
             return filteredMovies.count
         }
         else {
-          return moviesList.count
+            return moviesList.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var movie = moviesList[indexPath.row]
-
+        
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MoviesTableViewCell
         else {
@@ -83,7 +83,7 @@ extension MoviesDataSource : UITableViewDataSource {
         if searching {
             movie = filteredMovies[indexPath.row]
             cell.configure(with: movie)
-
+            
         }
         cell.configure(with: movie)
         movieSearchBar.delegate = self

@@ -16,9 +16,10 @@ struct UrlItems {
     let poster =  "https://image.tmdb.org/t/p/w500"
     let topRated =  "https://api.themoviedb.org/3/movie/top_rated?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US&page=1"
     let genre = "https://api.themoviedb.org/3/genre/movie/list?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US"
-    let similarMovie = "https://api.themoviedb.org/3/movie/610150/similar?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US&page=1"
+   let video = "https://api.themoviedb.org/3/movie/756999/videos?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US"
+    
 }
-
+//youtube - https://www.youtube.com/watch?v=key
 
 struct MoviesUrl {
     var topRated = "top_rated"

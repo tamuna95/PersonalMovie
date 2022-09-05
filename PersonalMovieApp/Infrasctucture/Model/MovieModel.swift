@@ -45,3 +45,7 @@ struct Genres: Codable {
     let id: Int
     let name: String
 }
+
+struct VideoModel {
+    var key : String
+}

@@ -10,12 +10,13 @@ import Cosmos
 import TinyConstraints
 
 class MoviesViewController: UIViewController {
-    
+//    MARK:- Outlets
     @IBOutlet weak var searchMovie: UISearchBar!
     @IBOutlet weak var popularLabel: UIButton!
     @IBOutlet weak var topRatedLabel: UIButton!
     @IBOutlet weak var nowPlayingLabel: UIButton!
     @IBOutlet weak var moviesTableView: UITableView!
+//   MARK:- Components
     private var searchBar : UISearchBar!
     private var viewModel: MovieListViewModelProtocol!
     private var dataSource: MoviesDataSource!
@@ -23,6 +24,7 @@ class MoviesViewController: UIViewController {
     private var searchBarDelegate : UISearchResultsUpdating!
     private var url = UrlItems()
     private var indexPathArry = [IndexPath]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         designButton()
