@@ -24,17 +24,5 @@ class MoviesManager: MoviesManagerProtocol {
     }
 }
 
-class GenresManager : MoviesManagerProtocol {
-    func fetchMovies<GenreModel: Codable>(url: String,completion: @escaping ((GenreModel) -> Void)) {
-        NetworkManager.shared.get(url: url) { (result: Result<GenreModel, Error>) in
-            switch result {
-            case .success(let genres):
-                completion(genres)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-}
 
 

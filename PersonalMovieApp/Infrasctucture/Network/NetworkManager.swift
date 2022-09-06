@@ -8,7 +8,6 @@
 import Foundation
 
 class NetworkManager {
-    let indicator = MoviesViewController()
     static let shared = NetworkManager()
     
     private init() {}

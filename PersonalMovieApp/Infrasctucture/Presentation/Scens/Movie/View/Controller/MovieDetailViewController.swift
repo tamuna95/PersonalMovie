@@ -29,8 +29,12 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieRate: CosmosView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
-    
-    
+    var videoViewModel : VideoListViewModelProtocol!
+    var videoList : [VideoViewModel] = []
+    var movieKey : String = " "
+    let semaphore = DispatchSemaphore(value: 1)
+    let queue = DispatchQueue(label: "firstQueue")
+
 //    MARK :- SetUp
     override func viewDidLoad() {
         configureViewModel()
@@ -40,22 +44,46 @@ class MovieDetailViewController: UIViewController {
         movieOverview.text = movieOverviewField
         movieRate.rating = movieRateField
         movieImage.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movieImageField)", placeHolderImage: UIImage(named: "placeholder.png")!)
+        
+        queue.async {
+            self.semaphore.wait()
+            self.getVideoKeyArray(url: self.url.video)
+                self.semaphore.signal()
+        }
+    }
+    func configure(){
+        let videoManager = LoadVideo()
+        videoViewModel = VideoListViewModel(with: videoManager)
+    }
+    @IBAction func videoPlayButtonDidTap(_ sender: Any) {
+        
+        displayVideoVC()
     }
     
-    @IBAction func videoPlayButtonDidTap(_ sender: Any) {
-//        guard let key = movieViewModel.video.first?.key else {
-//            return
-//        }
-//        let movieKey = "https://www.youtube.com/watch?v=\(key)"
-//        let url = URL(string: movieKey)!
-//        let item = AVPlayerItem(url: url)
-        
+    func getVideoKeyArray(url : String) {
+        configure()
+        videoViewModel.getVideoList(url: url, completion: { video in
+            self.videoList.append(contentsOf: video)
+            if let key = self.videoList.first?.videoKey {
+                self.movieKey = key
+                print("MOOVIE KEY \(self.movieKey)")
+            }
+            else {
+                
+                print("Key not found")
+            }
+
+        })
+    }
+    func displayVideoVC (){
         let sb = UIStoryboard(name: "VideoPlayer", bundle: nil)
         let vc = sb.instantiateViewController(identifier: "PlayerViewController") as! PlayerViewController
+        vc.key = movieKey
+        print("movieKey \(movieKey)")
+        print("VC KEY \(vc.key)")
         vc.modalPresentationStyle = .fullScreen
-        
-     //   vc.player.replaceCurrentItem(with: item)
         present(vc, animated: false, completion: nil)
+        
     }
     private func configureViewModel() {
         genreManager = GenresManager()

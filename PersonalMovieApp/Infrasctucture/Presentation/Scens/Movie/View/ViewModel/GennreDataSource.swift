@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class GenreDataSource : NSObject {
+    
     internal var genreList : [GenreViewModel] = []
     private var movieGenres : [String] = []
     private var genresCollectionView: UICollectionView

@@ -10,13 +10,15 @@ import Cosmos
 import TinyConstraints
 
 class MoviesViewController: UIViewController {
-//    MARK:- Outlets
+    
+//    MARK: - Outlets
     @IBOutlet weak var searchMovie: UISearchBar!
     @IBOutlet weak var popularLabel: UIButton!
     @IBOutlet weak var topRatedLabel: UIButton!
     @IBOutlet weak var nowPlayingLabel: UIButton!
     @IBOutlet weak var moviesTableView: UITableView!
-//   MARK:- Components
+    
+//   MARK: - Components
     private var searchBar : UISearchBar!
     private var viewModel: MovieListViewModelProtocol!
     private var dataSource: MoviesDataSource!
@@ -48,17 +50,21 @@ class MoviesViewController: UIViewController {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.popular, movieSearchBar: searchMovie)
         dataSource.refresh(url: url.popular)
+        dataSource.passingDataDelegate = self
+
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.topRated, movieSearchBar: searchMovie)
+        dataSource.passingDataDelegate = self
         dataSource.refresh(url: url.topRated)
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.nowPlaying, movieSearchBar: searchMovie)
+        dataSource.passingDataDelegate = self
         dataSource.refresh(url: url.nowPlaying)
     }
     
