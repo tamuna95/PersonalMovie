@@ -8,7 +8,24 @@
 import Foundation
 
 
+enum Links : String {
+    case baseUrl = "https://api.themoviedb.org/3/movie/"
+    case genreUrl = "https://api.themoviedb.org/3/genre/movie/list"
+}
+
 class NetworkManager {
+    func requestApi(url : String)-> URL {
+        var urlComponent = URLComponents(string: url)
+        urlComponent?.queryItems =  [
+            URLQueryItem(name: "api_key", value: "849449c28f7f0fcd751e99e02fa006d6"),
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1")
+        ]
+        var request = URLRequest(url: (urlComponent?.url!)!)
+        request.httpMethod = "GET"
+        return request.url!
+        
+    }
     static let shared = NetworkManager()
     var session = URLSession()
     init() {
@@ -19,9 +36,9 @@ class NetworkManager {
     
     func get<T: Codable>(url: String, completion: @escaping ((Result<T, Error>) -> Void)) {
         let url = requestApi(url: url)
-
+        
         session.dataTask(with: url) { data, response, error in
-
+            
             if let error = error {
                 DispatchQueue.main.async { completion(.failure(error)) }
             }
@@ -36,25 +53,6 @@ class NetworkManager {
         }.resume()
     }
     
-    func requestApi(url : String)-> URL
-    {
-        var urlComponent = URLComponents(string: url)
-        
-        urlComponent?.queryItems =  [
-            URLQueryItem(name: "api_key", value: "849449c28f7f0fcd751e99e02fa006d6"),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1")
-            
-        ]
-        var request = URLRequest(url: (urlComponent?.url!)!)
-        request.httpMethod = "GET"
-        return request.url!
-       
-    }
-}
-
-enum Links : String {
-    case movieBaseUrl = "https://api.themoviedb.org/3/movie/"
-    case genreUrl = "https://api.themoviedb.org/3/genre/movie/list"
     
 }
+

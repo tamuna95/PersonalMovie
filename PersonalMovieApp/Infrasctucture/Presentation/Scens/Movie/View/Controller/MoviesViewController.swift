@@ -31,7 +31,7 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         designButton()
         configureViewModel()
-        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "now_playing")
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
         moviesTableView.refreshControl = UIRefreshControl()
         moviesTableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         dataSource.passingDataDelegate = self
@@ -48,30 +48,30 @@ class MoviesViewController: UIViewController {
     
     @IBAction func popularButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "popular", movieSearchBar: searchMovie)
-        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "popular")
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie)
+        dataSource.refresh(url: Links.baseUrl.rawValue + "popular")
         dataSource.passingDataDelegate = self
 
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "top_rated", movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "top_rated", movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "top_rated")
+        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated")
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
         print("print",self)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "now_playing")
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
     }
     
     private func configureViewModel() {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
     }
     @objc private func didPullToRefresh(){
         print("start refresh")

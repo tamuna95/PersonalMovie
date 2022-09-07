@@ -17,7 +17,10 @@ import Foundation
 //    let genre = "https://api.themoviedb.org/3/genre/movie/list?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US"
 //   let video = "https://api.themoviedb.org/3/movie/756999/videos?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US"
 //
-//}
+// let similar = https://api.themoviedb.org/3/movie/610150/similar?api_key=849449c28f7f0fcd751e99e02fa006d6&language=en-US&page=1
+
+
+
 //youtube - https://www.youtube.com/watch?v=key
 
 

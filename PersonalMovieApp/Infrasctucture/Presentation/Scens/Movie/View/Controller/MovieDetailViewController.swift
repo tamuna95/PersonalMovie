@@ -49,7 +49,7 @@ class MovieDetailViewController: UIViewController {
         
         queue.async {
             self.semaphore.wait()
-            self.getVideoKeyArray(url: Links.movieBaseUrl.rawValue + "\(self.moviesId)/videos")
+            self.getVideoKeyArray(url: Links.baseUrl.rawValue + "\(self.moviesId)/videos")
                 self.semaphore.signal()
         }
     }
