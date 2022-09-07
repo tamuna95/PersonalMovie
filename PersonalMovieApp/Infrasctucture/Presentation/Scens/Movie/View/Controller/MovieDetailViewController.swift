@@ -15,27 +15,29 @@ class MovieDetailViewController: UIViewController {
     private var dataSource : GenreDataSource!
     var selectedMovieGenres : [Int] = []
     var genresName :[String] = []
-    var url = UrlItems()
     var movieImdbField = " "
     var movieNameFiled = " "
     var movieOverviewField = " "
     var movieRateField = 0.0
     var movieImageField = " "
+    var moviesId : Int = 0
+
+    var videoViewModel : VideoListViewModelProtocol!
+    var videoList : [VideoViewModel] = []
+    var movieKey : String = " "
+    let semaphore = DispatchSemaphore(value: 1)
+    let queue = DispatchQueue(label: "firstQueue")
     
-// MARK :- Outlets
+// MARK: - Outlets
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var movieOverview: UILabel!
     @IBOutlet weak var movieImdb: UILabel!
     @IBOutlet weak var movieRate: CosmosView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
-    var videoViewModel : VideoListViewModelProtocol!
-    var videoList : [VideoViewModel] = []
-    var movieKey : String = " "
-    let semaphore = DispatchSemaphore(value: 1)
-    let queue = DispatchQueue(label: "firstQueue")
 
-//    MARK :- SetUp
+//MARK: - SetUp
+    
     override func viewDidLoad() {
         configureViewModel()
         super.viewDidLoad()
@@ -47,10 +49,11 @@ class MovieDetailViewController: UIViewController {
         
         queue.async {
             self.semaphore.wait()
-            self.getVideoKeyArray(url: self.url.video)
+            self.getVideoKeyArray(url: Links.movieBaseUrl.rawValue + "\(self.moviesId)/videos")
                 self.semaphore.signal()
         }
     }
+    
     func configure(){
         let videoManager = LoadVideo()
         videoViewModel = VideoListViewModel(with: videoManager)
@@ -62,11 +65,11 @@ class MovieDetailViewController: UIViewController {
     
     func getVideoKeyArray(url : String) {
         configure()
-        videoViewModel.getVideoList(url: url, completion: { video in
-            self.videoList.append(contentsOf: video)
-            if let key = self.videoList.first?.videoKey {
-                self.movieKey = key
-                print("MOOVIE KEY \(self.movieKey)")
+        videoViewModel.getVideoList(url: url, completion: {[weak self] video in
+            self?.videoList.append(contentsOf: video)
+            if let key = self?.videoList.first?.videoKey {
+                self?.movieKey = key
+                print("MOOVIE KEY \(self?.movieKey)")
             }
             else {
                 
@@ -88,7 +91,7 @@ class MovieDetailViewController: UIViewController {
     private func configureViewModel() {
         genreManager = GenresManager()
         genreViewModel = GenreListViewModel(with: genreManager)
-        dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: url.genre)
+        dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
         dataSource.refresh()
         
         
@@ -103,7 +106,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
 }
-//MARK :- View Controller extension
+//MARK: - View Controller extension
 
 extension MovieDetailViewController : UICollectionViewDataSource,UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

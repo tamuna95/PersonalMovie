@@ -39,7 +39,6 @@ class MoviesDataSource : NSObject {
     private func setUpDelegates() {
         self.moviesTableView.dataSource = self
         self.moviesTableView.delegate = self
-        
     }
     
     func refresh(url : String) {
@@ -50,7 +49,7 @@ class MoviesDataSource : NSObject {
     }
 }
 
-// MARK :- DataSource class extensions
+// MARK: -DataSource class extensions
 
 extension MoviesDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -59,9 +58,9 @@ extension MoviesDataSource : UITableViewDelegate {
         selectedMovieGenre = moviesList[indexPath.row].id
         print(selectedMovieGenre)
         movieId = moviesList[indexPath.row].movieID
+        print(movieId)
     }
 }
-
 extension MoviesDataSource : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
@@ -87,7 +86,7 @@ extension MoviesDataSource : UITableViewDataSource {
         }
         cell.configure(with: movie)
         movieSearchBar.delegate = self
-        
+
         return cell
     }
     
@@ -97,7 +96,7 @@ extension MoviesDataSource : UITableViewDataSource {
     
 }
 
-//MARK :- Protocol for Search Bar
+//MARK: -Protocol for Search Bar
 extension MoviesDataSource : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}

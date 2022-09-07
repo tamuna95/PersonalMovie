@@ -24,10 +24,10 @@ class GenreDataSource : NSObject {
    
     
     func refresh() {
-        genreViewModel.getList(url: url, completion: { genre in
-            self.genreList.append(contentsOf: genre)
-            print(self.genreList.count)
-            self.genresCollectionView.reloadData()
+        genreViewModel.getList(url: url, completion: {[weak self] genre in
+            self?.genreList.append(contentsOf: genre)
+            print(self?.genreList.count)
+            self?.genresCollectionView.reloadData()
         })
     }
     

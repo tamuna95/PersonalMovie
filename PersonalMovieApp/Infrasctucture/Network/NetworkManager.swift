@@ -7,15 +7,20 @@
 
 import Foundation
 
+
 class NetworkManager {
     static let shared = NetworkManager()
-    
-    private init() {}
+    var session = URLSession()
+    init() {
+        let urlSessionConfiguration = URLSessionConfiguration.default
+        let urlSession = URLSession(configuration: urlSessionConfiguration)
+        self.session = urlSession
+    }
     
     func get<T: Codable>(url: String, completion: @escaping ((Result<T, Error>) -> Void)) {
-        guard let url = URL(string: url) else { return }
+        let url = requestApi(url: url)
 
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        session.dataTask(with: url) { data, response, error in
 
             if let error = error {
                 DispatchQueue.main.async { completion(.failure(error)) }
@@ -31,5 +36,25 @@ class NetworkManager {
         }.resume()
     }
     
+    func requestApi(url : String)-> URL
+    {
+        var urlComponent = URLComponents(string: url)
+        
+        urlComponent?.queryItems =  [
+            URLQueryItem(name: "api_key", value: "849449c28f7f0fcd751e99e02fa006d6"),
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1")
+            
+        ]
+        var request = URLRequest(url: (urlComponent?.url!)!)
+        request.httpMethod = "GET"
+        return request.url!
+       
+    }
+}
+
+enum Links : String {
+    case movieBaseUrl = "https://api.themoviedb.org/3/movie/"
+    case genreUrl = "https://api.themoviedb.org/3/genre/movie/list"
     
 }

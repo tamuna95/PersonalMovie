@@ -9,6 +9,7 @@ import UIKit
 import Cosmos
 import TinyConstraints
 
+
 class MoviesViewController: UIViewController {
     
 //    MARK: - Outlets
@@ -24,14 +25,13 @@ class MoviesViewController: UIViewController {
     private var dataSource: MoviesDataSource!
     private var moviesManager: MoviesManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
-    private var url = UrlItems()
     private var indexPathArry = [IndexPath]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         designButton()
         configureViewModel()
-        dataSource.refresh(url: url.nowPlaying)
+        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "now_playing")
         moviesTableView.refreshControl = UIRefreshControl()
         moviesTableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         dataSource.passingDataDelegate = self
@@ -48,29 +48,30 @@ class MoviesViewController: UIViewController {
     
     @IBAction func popularButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.popular, movieSearchBar: searchMovie)
-        dataSource.refresh(url: url.popular)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "popular", movieSearchBar: searchMovie)
+        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "popular")
         dataSource.passingDataDelegate = self
 
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.topRated, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "top_rated", movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: url.topRated)
+        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "top_rated")
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.nowPlaying, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
+        print("print",self)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: url.nowPlaying)
+        dataSource.refresh(url: Links.movieBaseUrl.rawValue + "now_playing")
     }
     
     private func configureViewModel() {
         configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: url.nowPlaying, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.movieBaseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
     }
     @objc private func didPullToRefresh(){
         print("start refresh")
@@ -97,6 +98,7 @@ extension MoviesViewController : passingDataProtocol {
                 destinationVC?.movieRateField = dataSource.moviesList[i.row].imdb / 2
                 destinationVC?.movieImageField = dataSource.moviesList[i.row].posterPath
                 destinationVC?.selectedMovieGenres = dataSource.moviesList[i.row].id
+                destinationVC?.moviesId = dataSource.moviesList[i.row].movieID
             }
         }
     }
