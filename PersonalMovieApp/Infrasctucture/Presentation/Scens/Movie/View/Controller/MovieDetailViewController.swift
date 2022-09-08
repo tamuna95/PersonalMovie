@@ -10,9 +10,14 @@ import Cosmos
 
 class MovieDetailViewController: UIViewController {
     
+    @IBOutlet weak var similarMovieCollectionView: UICollectionView!
     private var genreViewModel : GenreListViewModelProtocol!
     private var genreManager: MoviesManagerProtocol!
     private var dataSource : GenreDataSource!
+    private var similarviewModel: MovieListViewModelProtocol!
+    private var similarMoviedataSource: SimilarMovieDataSource!
+    private var moviesManager: MoviesManagerProtocol!
+
     var selectedMovieGenres : [Int] = []
     var genresName :[String] = []
     var movieImdbField = " "
@@ -34,8 +39,6 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieRate: CosmosView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
-
-    var similar : SimilarMovieDataSource!
 //MARK: - SetUp
     
     override func viewDidLoad() {
@@ -94,7 +97,14 @@ class MovieDetailViewController: UIViewController {
         genreManager = GenresManager()
         genreViewModel = GenreListViewModel(with: genreManager)
         dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
+        
+            moviesManager = MoviesManager()
+        similarviewModel = MovieListViewModel(with: moviesManager)
+    
         dataSource.refresh()
+        similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
+        similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
+        
         
         
     }

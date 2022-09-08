@@ -12,6 +12,9 @@ class SimilarMovieDataSource : NSObject  {
     private var similarMovieCollectionView : UICollectionView
     private var similarMoviesViewModel: MovieListViewModelProtocol
     var similarMoviesList: [MovieViewModel] = []
+    var obj = MovieDetailViewController()
+    
+    
     init(similarMovieCollectionView: UICollectionView, similarMoviesViewModel: MovieListViewModelProtocol){
         self.similarMovieCollectionView = similarMovieCollectionView
         self.similarMoviesViewModel = similarMoviesViewModel
@@ -32,7 +35,9 @@ class SimilarMovieDataSource : NSObject  {
     }
 }
 extension SimilarMovieDataSource : UICollectionViewDelegate,UICollectionViewDataSource {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         similarMoviesList.count
     }
