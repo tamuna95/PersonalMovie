@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,18 +12,18 @@
             <objects>
                 <viewController storyboardIdentifier="PlayerViewController" id="Y6W-OH-hqX" customClass="PlayerViewController" customModule="PersonalMovieApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTY-kY-VP9" customClass="YTPlayerView" customModule="youtube_ios_player_helper_swift">
-                                <rect key="frame" x="0.0" y="0.0" width="796" height="414"/>
-                                <color key="backgroundColor" red="0.0837097168" green="0.1019897461" blue="0.3082885742" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ni6-Ez-Ea7">
-                                <rect key="frame" x="801" y="20" width="45" height="31"/>
+                                <rect key="frame" x="339" y="64" width="45" height="31"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="Pqo-fY-jmA"/>
-                                    <constraint firstAttribute="width" constant="45" id="RgK-FG-Her"/>
+                                    <constraint firstAttribute="width" constant="45" id="0db-35-DOB"/>
+                                    <constraint firstAttribute="height" constant="31" id="6Qr-Da-Pmc"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -34,14 +34,14 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" red="0.0837097168" green="0.1019897461" blue="0.3082885742" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="tTY-kY-VP9" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="4UJ-ge-1hQ"/>
-                            <constraint firstItem="ni6-Ez-Ea7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="DuB-Cr-iLC"/>
-                            <constraint firstItem="tTY-kY-VP9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Hjb-ls-r8r"/>
-                            <constraint firstItem="ni6-Ez-Ea7" firstAttribute="leading" secondItem="tTY-kY-VP9" secondAttribute="trailing" constant="5" id="YXt-s4-zBO"/>
-                            <constraint firstAttribute="bottom" secondItem="tTY-kY-VP9" secondAttribute="bottom" id="pm0-Xv-YnH"/>
-                            <constraint firstAttribute="trailing" secondItem="tTY-kY-VP9" secondAttribute="trailing" constant="100" id="zjL-vN-PB8"/>
+                            <constraint firstItem="tTY-kY-VP9" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="1wN-gf-Ob9"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ni6-Ez-Ea7" secondAttribute="trailing" constant="30" id="6Gc-C9-irR"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="tTY-kY-VP9" secondAttribute="trailing" id="CV7-15-5KR"/>
+                            <constraint firstAttribute="bottom" secondItem="tTY-kY-VP9" secondAttribute="bottom" id="d1J-Z8-13Y"/>
+                            <constraint firstItem="ni6-Ez-Ea7" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="jKv-On-Gc6"/>
+                            <constraint firstItem="tTY-kY-VP9" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="zNE-Rr-Qfe"/>
                         </constraints>
                     </view>
                     <connections>
@@ -50,7 +50,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9.375" y="81.159420289855078"/>
+            <point key="canvasLocation" x="8.6956521739130448" y="81.026785714285708"/>
         </scene>
     </scenes>
     <resources>

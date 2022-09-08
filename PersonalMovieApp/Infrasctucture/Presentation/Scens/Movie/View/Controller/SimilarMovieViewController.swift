@@ -12,42 +12,13 @@ class SimilarMovieViewController: UIViewController {
     private var viewModel: MovieListViewModelProtocol!
     private var dataSource: SimilarMovieDataSource!
     private var moviesManager: MoviesManagerProtocol!
-//    private var movieID : MoviesDataSource!
-//    
-//     init(movieID : MoviesDataSource) {
-//         self.movieID = movieID
-//         super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewModel()
 //        dataSource.refresh(url: Links.baseUrl.rawValue + "\(movieID)" + "similar")
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
         
-//        let size = NSCollectionLayoutSize(
-//            widthDimension: NSCollectionLayoutDimension.fractionalWidth(1),
-//            heightDimension: NSCollectionLayoutDimension.absolute(250)
-//        )
-//
-//        let item = NSCollectionLayoutItem(layoutSize: size)
-//        item.contentInsets = NSDirectionalEdgeInsets(top: 10,
-//                                                    leading: 15,
-//                                                    bottom: 10,
-//                                                    trailing: 15)
-//        
-//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: 2)
-//
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-//        section.interGroupSpacing = 5
-//
-//        let layout = UICollectionViewCompositionalLayout(section: section)
-//        similarMovieCollectionnView.collectionViewLayout = layout
     }
     private func configureMovie(){
         moviesManager = MoviesManager()

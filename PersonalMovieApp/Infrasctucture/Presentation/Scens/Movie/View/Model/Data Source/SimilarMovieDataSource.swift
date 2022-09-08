@@ -12,11 +12,9 @@ class SimilarMovieDataSource : NSObject  {
     private var similarMovieCollectionView : UICollectionView
     private var similarMoviesViewModel: MovieListViewModelProtocol
     var similarMoviesList: [MovieViewModel] = []
-//    var similarMoviesId : Int
     init(similarMovieCollectionView: UICollectionView, similarMoviesViewModel: MovieListViewModelProtocol){
         self.similarMovieCollectionView = similarMovieCollectionView
         self.similarMoviesViewModel = similarMoviesViewModel
-//        self.similarMoviesId = similarMoviesId
         super.init()
         setUpDelegates()
     }

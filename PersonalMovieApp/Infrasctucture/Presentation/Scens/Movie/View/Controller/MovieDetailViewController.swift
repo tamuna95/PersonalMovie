@@ -27,7 +27,6 @@ class MovieDetailViewController: UIViewController {
     var movieKey : String = " "
     let semaphore = DispatchSemaphore(value: 1)
     let queue = DispatchQueue(label: "firstQueue")
-    
 // MARK: - Outlets
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var movieOverview: UILabel!
@@ -36,20 +35,23 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
 
+    var similar : SimilarMovieDataSource!
 //MARK: - SetUp
     
     override func viewDidLoad() {
         configureViewModel()
+        print("print",moviesId)
         super.viewDidLoad()
         movieImdb.text = movieImdbField
         movieName.text = movieNameFiled
         movieOverview.text = movieOverviewField
         movieRate.rating = movieRateField
         movieImage.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movieImageField)", placeHolderImage: UIImage(named: "placeholder.png")!)
-        
+       
         queue.async {
             self.semaphore.wait()
             self.getVideoKeyArray(url: Links.baseUrl.rawValue + "\(self.moviesId)/videos")
+            
                 self.semaphore.signal()
         }
     }

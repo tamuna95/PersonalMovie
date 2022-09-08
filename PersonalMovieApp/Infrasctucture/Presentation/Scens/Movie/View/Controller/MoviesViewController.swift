@@ -26,12 +26,13 @@ class MoviesViewController: UIViewController {
     private var moviesManager: MoviesManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
     private var indexPathArry = [IndexPath]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         designButton()
         configureViewModel()
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
+        
         moviesTableView.refreshControl = UIRefreshControl()
         moviesTableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         dataSource.passingDataDelegate = self
@@ -89,17 +90,30 @@ extension MoviesViewController : passingDataProtocol {
         performSegue(withIdentifier: "DetailPage", sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailPage" {
-            let destinationVC = segue.destination as? MovieDetailViewController
-            for i in indexPathArry {
-                destinationVC?.movieImdbField = String(dataSource.moviesList[i.row].imdb)
-                destinationVC?.movieNameFiled = String(dataSource.moviesList[i.row].title)
-                destinationVC?.movieOverviewField = String(dataSource.moviesList[i.row].overview)
-                destinationVC?.movieRateField = dataSource.moviesList[i.row].imdb / 2
-                destinationVC?.movieImageField = dataSource.moviesList[i.row].posterPath
-                destinationVC?.selectedMovieGenres = dataSource.moviesList[i.row].id
-                destinationVC?.moviesId = dataSource.moviesList[i.row].movieID
+
+            if dataSource.searching {
+                dataTransfer(array: dataSource.filteredMovies, segue: segue)
+
             }
+            else {
+                dataTransfer(array: dataSource.moviesList, segue: segue)
+                }
+    
+            
         }
+    func dataTransfer(array : [MovieViewModel],segue: UIStoryboardSegue)
+    {
+        if segue.identifier == "DetailPage" {
+        let destinationVC = segue.destination as? MovieDetailViewController
+            for i in indexPathArry {
+                destinationVC?.movieImdbField = String(array[i.row].imdb)
+                destinationVC?.movieNameFiled = String(array[i.row].title)
+                destinationVC?.movieOverviewField = String(array[i.row].overview)
+                destinationVC?.movieRateField = array[i.row].imdb / 2
+                destinationVC?.movieImageField = array[i.row].posterPath
+                destinationVC?.selectedMovieGenres = array[i.row].id
+                destinationVC?.moviesId = array[i.row].movieID
     }
+}
+}
 }
