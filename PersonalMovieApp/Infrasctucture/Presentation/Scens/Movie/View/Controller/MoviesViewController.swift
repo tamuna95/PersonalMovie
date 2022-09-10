@@ -12,21 +12,20 @@ import TinyConstraints
 
 class MoviesViewController: UIViewController {
     
-//    MARK: - Outlets
+    //    MARK: - Outlets
     @IBOutlet weak var searchMovie: UISearchBar!
     @IBOutlet weak var popularLabel: UIButton!
     @IBOutlet weak var topRatedLabel: UIButton!
     @IBOutlet weak var nowPlayingLabel: UIButton!
     @IBOutlet weak var moviesTableView: UITableView!
     
-//   MARK: - Components
+    //   MARK: - Components
     private var searchBar : UISearchBar!
     private var viewModel: MovieListViewModelProtocol!
     private var dataSource: MoviesDataSource!
     private var moviesManager: MoviesManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
-    private var indexPathArry = [IndexPath]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         designButton()
@@ -40,7 +39,7 @@ class MoviesViewController: UIViewController {
         nowPlayingLabel.layer.cornerRadius = 10
         topRatedLabel.layer.cornerRadius = 10
     }
-//    MARK: - Set Up functions
+    //    MARK: - Set Up functions
     
     private func configureMovie(){
         moviesManager = MoviesManager()
@@ -50,13 +49,13 @@ class MoviesViewController: UIViewController {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
     }
-//    MARK: - Action Buttons
+    //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie)
         dataSource.refresh(url: Links.baseUrl.rawValue + "popular")
         dataSource.passingDataDelegate = self
-
+        
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
@@ -78,36 +77,35 @@ class MoviesViewController: UIViewController {
 
 //MARK: extension for complete passing data protocol
 
-extension MoviesViewController : passingDataProtocol {
+extension MoviesViewController : PassingDataProtocol {
     func fetchMovie(indexpath: IndexPath) {
-        indexPathArry.append(indexpath)
-        performSegue(withIdentifier: "DetailPage", sender: nil)
+        performSegue(withIdentifier: "DetailPage", sender: indexpath)
     }
-//    MARK: function for implemeting cell's fileds
+    //    MARK: function for implemeting cell's fileds
     
-    func dataTransfer(array : [MovieViewModel],segue: UIStoryboardSegue) {
-        if segue.identifier == "DetailPage" {
+    func dataTransfer(item : MovieViewModel,segue: UIStoryboardSegue) {
+        
         let destinationVC = segue.destination as? MovieDetailViewController
-            for i in indexPathArry {
-                destinationVC?.movieImdbField = String(array[i.row].imdb)
-                destinationVC?.movieNameFiled = String(array[i.row].title)
-                destinationVC?.movieOverviewField = String(array[i.row].overview)
-                destinationVC?.movieRateField = array[i.row].imdb / 2
-                destinationVC?.movieImageField = array[i.row].posterPath
-                destinationVC?.selectedMovieGenres = array[i.row].id
-                destinationVC?.moviesId = array[i.row].movieID
-                
-    }
-}
+        destinationVC?.movieImdbField = String(item.imdb)
+        destinationVC?.movieNameFiled = String(item.title)
+        destinationVC?.movieOverviewField = String(item.overview)
+        destinationVC?.movieRateField = item.imdb / 2
+        destinationVC?.movieImageField = item.posterPath
+        destinationVC?.selectedMovieGenres = item.id
+        destinationVC?.moviesId = item.movieID
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if segue.identifier == "DetailPage" {
+            let indexPath = sender as! IndexPath
             if dataSource.searching {
-                dataTransfer(array: dataSource.filteredMovies, segue: segue)
+                dataTransfer(item: dataSource.filteredMovies[indexPath.row],
+                             segue: segue)
             }
             else {
-                dataTransfer(array: dataSource.moviesList, segue: segue)
-                }
+                dataTransfer(item: dataSource.moviesList[indexPath.row], segue: segue)
+            }
         }
+    }
     
 }

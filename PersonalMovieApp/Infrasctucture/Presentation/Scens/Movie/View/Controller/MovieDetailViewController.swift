@@ -17,7 +17,7 @@ class MovieDetailViewController: UIViewController {
     private var similarviewModel: MovieListViewModelProtocol!
     private var similarMoviedataSource: SimilarMovieDataSource!
     private var moviesManager: MoviesManagerProtocol!
-
+    
     var selectedMovieGenres : [Int] = []
     var genresName :[String] = []
     var movieImdbField = " "
@@ -26,13 +26,12 @@ class MovieDetailViewController: UIViewController {
     var movieRateField = 0.0
     var movieImageField = " "
     var moviesId : Int = 0
-
+    
     var videoViewModel : VideoListViewModelProtocol!
     var videoList : [VideoViewModel] = []
     var movieKey : String = " "
-    let semaphore = DispatchSemaphore(value: 1)
     let queue = DispatchQueue(label: "firstQueue")
-// MARK: - Outlets
+    // MARK: - Outlets
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var movieOverview: UILabel!
     @IBOutlet weak var movieImdb: UILabel!
@@ -40,7 +39,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
     
-//MARK: - SetUp
+    //MARK: - SetUp
     
     override func viewDidLoad() {
         configureViewModel()
@@ -51,18 +50,15 @@ class MovieDetailViewController: UIViewController {
         movieOverview.text = movieOverviewField
         movieRate.rating = movieRateField
         movieImage.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movieImageField)", placeHolderImage: UIImage(named: "placeholder.png")!)
-       
+        
         queue.async {
-            self.semaphore.wait()
             self.getVideoKeyArray(url: Links.baseUrl.rawValue + "\(self.moviesId)/videos")
             
-                self.semaphore.signal()
-        }
+    }
     }
     @IBAction func videoPlayButtonDidTap(_ sender: Any) {
         displayVideoVC()
     }
-    
     
     func configure(){
         let videoManager = LoadVideo()
@@ -87,13 +83,13 @@ class MovieDetailViewController: UIViewController {
             self?.videoList.append(contentsOf: video)
             if let key = self?.videoList.first?.videoKey {
                 self?.movieKey = key
-                print("MOOVIE KEY \(self?.movieKey)")
+//                print("MOOVIE KEY \(self?.movieKey)")
             }
             else {
                 
                 print("Key not found")
             }
-
+            
         })
     }
     private func displayVideoVC (){

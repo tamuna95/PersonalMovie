@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-protocol passingDataProtocol {
+protocol PassingDataProtocol {
     func fetchMovie(indexpath : IndexPath)
-    func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    func prepare(for segue: UIStoryboardSegue,  sender: Any?)
 }
 
 
@@ -23,7 +23,7 @@ class MoviesDataSource : NSObject {
     private var urlItems : String
     var filteredMovies: [MovieViewModel] = []
     var searching = false
-    var passingDataDelegate : passingDataProtocol!
+    var passingDataDelegate : PassingDataProtocol!
     var movieId : Int = 0
     
     
