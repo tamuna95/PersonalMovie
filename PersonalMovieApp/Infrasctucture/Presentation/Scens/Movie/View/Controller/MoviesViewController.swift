@@ -32,9 +32,7 @@ class MoviesViewController: UIViewController {
         designButton()
         configureViewModel()
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
-        
         moviesTableView.refreshControl = UIRefreshControl()
-        moviesTableView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         dataSource.passingDataDelegate = self
     }
     func designButton(){
@@ -42,18 +40,23 @@ class MoviesViewController: UIViewController {
         nowPlayingLabel.layer.cornerRadius = 10
         topRatedLabel.layer.cornerRadius = 10
     }
+//    MARK: - Set Up functions
+    
     private func configureMovie(){
         moviesManager = MoviesManager()
         viewModel = MovieListViewModel(with: moviesManager)
     }
-    
+    private func configureViewModel() {
+        configureMovie()
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
+    }
+//    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
         configureMovie()
         dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie)
         dataSource.refresh(url: Links.baseUrl.rawValue + "popular")
         dataSource.passingDataDelegate = self
 
-        
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         configureMovie()
@@ -70,39 +73,19 @@ class MoviesViewController: UIViewController {
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
     }
     
-    private func configureViewModel() {
-        configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
-    }
-    @objc private func didPullToRefresh(){
-        print("start refresh")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.moviesTableView.refreshControl?.endRefreshing()
-            self.moviesTableView.reloadData()
-        }
-    }
-    
-    
 }
+
+
+//MARK: extension for complete passing data protocol
+
 extension MoviesViewController : passingDataProtocol {
     func fetchMovie(indexpath: IndexPath) {
         indexPathArry.append(indexpath)
         performSegue(withIdentifier: "DetailPage", sender: nil)
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-            if dataSource.searching {
-                dataTransfer(array: dataSource.filteredMovies, segue: segue)
-
-            }
-            else {
-                dataTransfer(array: dataSource.moviesList, segue: segue)
-                }
+//    MARK: function for implemeting cell's fileds
     
-            
-        }
-    func dataTransfer(array : [MovieViewModel],segue: UIStoryboardSegue)
-    {
+    func dataTransfer(array : [MovieViewModel],segue: UIStoryboardSegue) {
         if segue.identifier == "DetailPage" {
         let destinationVC = segue.destination as? MovieDetailViewController
             for i in indexPathArry {
@@ -113,7 +96,18 @@ extension MoviesViewController : passingDataProtocol {
                 destinationVC?.movieImageField = array[i.row].posterPath
                 destinationVC?.selectedMovieGenres = array[i.row].id
                 destinationVC?.moviesId = array[i.row].movieID
+                
     }
 }
-}
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+            if dataSource.searching {
+                dataTransfer(array: dataSource.filteredMovies, segue: segue)
+            }
+            else {
+                dataTransfer(array: dataSource.moviesList, segue: segue)
+                }
+        }
+    
 }

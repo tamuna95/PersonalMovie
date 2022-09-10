@@ -105,10 +105,26 @@
 		182B799328C8DEDE0077F6E2 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				18FC741028C07BAB00C33143 /* MovieViewModel.swift */,
+				18DAFD4028CCF7FC00813E2C /* View Models */,
+				18DAFD3F28CCF7EA00813E2C /* Source */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		18DAFD3F28CCF7EA00813E2C /* Source */ = {
+			isa = PBXGroup;
+			children = (
 				18FC741628C07DB800C33143 /* MovieListViewModel.swift */,
 				181DB4A628C67D2C00327A3A /* GenreListViewModel.swift */,
 				18E55F9A28C76F9600442FB6 /* VideoListViewModel.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		18DAFD4028CCF7FC00813E2C /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				18FC741028C07BAB00C33143 /* MovieViewModel.swift */,
 				18E55F9C28C78A2000442FB6 /* GenreViewModel.swift */,
 				18E55F9E28C78A3A00442FB6 /* VideoViewModel.swift */,
 			);

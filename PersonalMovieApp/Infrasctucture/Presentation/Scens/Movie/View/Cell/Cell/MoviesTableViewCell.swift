@@ -33,7 +33,7 @@ class MoviesTableViewCell: UITableViewCell {
 
         disableRating()
     }
-    func disableRating(){
+   private func disableRating(){
         ratinngCosmosView.settings.updateOnTouch = false
 
     }

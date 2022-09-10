@@ -39,6 +39,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieRate: CosmosView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
+    
 //MARK: - SetUp
     
     override func viewDidLoad() {
@@ -58,17 +59,29 @@ class MovieDetailViewController: UIViewController {
                 self.semaphore.signal()
         }
     }
+    @IBAction func videoPlayButtonDidTap(_ sender: Any) {
+        displayVideoVC()
+    }
+    
     
     func configure(){
         let videoManager = LoadVideo()
         videoViewModel = VideoListViewModel(with: videoManager)
     }
-    @IBAction func videoPlayButtonDidTap(_ sender: Any) {
+    private func configureViewModel() {
         
-        displayVideoVC()
+        genreManager = GenresManager()
+        genreViewModel = GenreListViewModel(with: genreManager)
+        dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
+        moviesManager = MoviesManager()
+        similarviewModel = MovieListViewModel(with: moviesManager)
+        dataSource.refresh()
+        similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
+        similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
     }
     
-    func getVideoKeyArray(url : String) {
+    
+    private func getVideoKeyArray(url : String) {
         configure()
         videoViewModel.getVideoList(url: url, completion: {[weak self] video in
             self?.videoList.append(contentsOf: video)
@@ -83,7 +96,7 @@ class MovieDetailViewController: UIViewController {
 
         })
     }
-    func displayVideoVC (){
+    private func displayVideoVC (){
         let sb = UIStoryboard(name: "VideoPlayer", bundle: nil)
         let vc = sb.instantiateViewController(identifier: "PlayerViewController") as! PlayerViewController
         vc.key = movieKey
@@ -93,22 +106,8 @@ class MovieDetailViewController: UIViewController {
         present(vc, animated: false, completion: nil)
         
     }
-    private func configureViewModel() {
-        genreManager = GenresManager()
-        genreViewModel = GenreListViewModel(with: genreManager)
-        dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
-        
-            moviesManager = MoviesManager()
-        similarviewModel = MovieListViewModel(with: moviesManager)
     
-        dataSource.refresh()
-        similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
-        similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
-        
-        
-        
-    }
-    func GetGenresName(){
+    private func GetGenresName(){
         for i in dataSource.genreList {
             for j in selectedMovieGenres {
                 if j == i.id {
@@ -118,7 +117,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
 }
-//MARK: - View Controller extension
+//MARK: - View Controller extension for collection view controller protocol
 
 extension MovieDetailViewController : UICollectionViewDataSource,UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
