@@ -25,7 +25,7 @@ class MoviesViewController: UIViewController {
     private var dataSource: MoviesDataSource!
     private var moviesManager: TaskManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
-    private var buttonIsSelected : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         moviesManager = TaskManager()

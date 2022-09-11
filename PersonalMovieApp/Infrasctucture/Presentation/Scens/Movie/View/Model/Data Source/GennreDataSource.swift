@@ -14,6 +14,7 @@ class GenreDataSource : NSObject {
     private var movieGenres : [String] = []
     private var genresCollectionView: UICollectionView
     private var genreViewModel: GenreListViewModelProtocol
+    internal var genreDict : [Int : String] = [:]
     var url : String
     init(genresCollectionView : UICollectionView,genreViewModel : GenreListViewModelProtocol,url : String){
         self.genresCollectionView = genresCollectionView
@@ -26,7 +27,16 @@ class GenreDataSource : NSObject {
     func refresh() {
         genreViewModel.getList(url: url, completion: {[weak self] genre in
             self?.genreList.append(contentsOf: genre)
-            print(self?.genreList.count)
+            print(self?.genreList.count ?? 0)
+            if ((self?.genreList.isEmpty) == nil) {
+                print("Data wasnt fetched")
+            }
+            else {
+                for i in self?.genreList ?? [] {
+                    self?.genreDict[i.id] = i.name
+                }
+            }
+            print(self?.genreDict ?? [1:""])
             self?.genresCollectionView.reloadData()
         })
     }

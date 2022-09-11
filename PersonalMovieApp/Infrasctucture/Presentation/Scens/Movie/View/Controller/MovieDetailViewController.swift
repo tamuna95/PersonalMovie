@@ -26,7 +26,7 @@ class MovieDetailViewController: UIViewController {
     var movieRateField = 0.0
     var movieImageField = " "
     var moviesId : Int = 0
-    
+
     var videoViewModel : VideoListViewModelProtocol!
     var videoList : [VideoViewModel] = []
     var movieKey : String = " "
@@ -60,12 +60,9 @@ class MovieDetailViewController: UIViewController {
         displayVideoVC()
     }
     
-    func configure(){
+    private func configureViewModel() {
         let videoManager = TaskManager()
         videoViewModel = VideoListViewModel(with: videoManager)
-    }
-    private func configureViewModel() {
-        
         genreManager = TaskManager()
         genreViewModel = GenreListViewModel(with: genreManager)
         dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
@@ -75,15 +72,14 @@ class MovieDetailViewController: UIViewController {
         similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
         similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
     }
-    
+
+
     
     private func getVideoKeyArray(url : String) {
-        configure()
         videoViewModel.getVideoList(url: url, completion: {[weak self] video in
             self?.videoList.append(contentsOf: video)
             if let key = self?.videoList.first?.videoKey {
                 self?.movieKey = key
-//                print("MOOVIE KEY \(self?.movieKey)")
             }
             else {
                 
@@ -103,12 +99,10 @@ class MovieDetailViewController: UIViewController {
         
     }
     
-    private func GetGenresName(){
-        for i in dataSource.genreList {
-            for j in selectedMovieGenres {
-                if j == i.id {
-                    genresName.append(i.name)
-                }
+    func getGenre(){
+        for i in selectedMovieGenres {
+            if dataSource.genreDict.keys.contains(i) {
+                genresName.append(dataSource.genreDict[i]!)
             }
         }
     }
@@ -117,7 +111,7 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController : UICollectionViewDataSource,UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        GetGenresName()
+        getGenre()
         return genresName .count
     }
     

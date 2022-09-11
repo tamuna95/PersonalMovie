@@ -20,7 +20,6 @@ class MoviesDataSource : NSObject {
     private var moviesTableView: UITableView
     private var moviesViewModel: MovieListViewModelProtocol
     var moviesList: [MovieViewModel] = []
-//    private var urlItems : String
     var filteredMovies: [MovieViewModel] = []
     var searching = false
     var passingDataDelegate : PassingDataProtocol!
@@ -30,7 +29,6 @@ class MoviesDataSource : NSObject {
     init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,movieSearchBar : UISearchBar){
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
-//        self.urlItems = urlItems
         self.movieSearchBar = movieSearchBar
         super.init()
         setUpDelegates()
