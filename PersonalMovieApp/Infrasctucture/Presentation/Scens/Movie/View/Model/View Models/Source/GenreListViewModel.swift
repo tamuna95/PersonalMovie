@@ -7,13 +7,11 @@
 
 import Foundation
 
-protocol GenreListViewModelProtocol: AnyObject {
-    func getList(url : String,completion: @escaping (([GenreViewModel]) -> Void))
-    
-    init(with genreManager: TaskManagerProtocol)
-}
 
-class GenreListViewModel : GenreListViewModelProtocol {
+
+class GenreListViewModel : MovieListViewModelProtocol {
+    typealias T = GenreViewModel
+
     required init(with genreManager: TaskManagerProtocol) {
         self.genreManager = genreManager
     }

@@ -18,7 +18,7 @@ class MoviesDataSource : NSObject {
     var movieSearchBar : UISearchBar
     var selectedMovieGenre : [Int] = []
     private var moviesTableView: UITableView
-    private var moviesViewModel: MovieListViewModelProtocol
+    private var moviesViewModel: MovieListViewModel
     var moviesList: [MovieViewModel] = []
     var filteredMovies: [MovieViewModel] = []
     var searching = false
@@ -26,7 +26,7 @@ class MoviesDataSource : NSObject {
     var movieId : Int = 0
     
     
-    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,movieSearchBar : UISearchBar){
+    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModel,movieSearchBar : UISearchBar){
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
         self.movieSearchBar = movieSearchBar

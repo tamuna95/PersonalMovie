@@ -13,10 +13,10 @@ class GenreDataSource : NSObject {
     internal var genreList : [GenreViewModel] = []
     private var movieGenres : [String] = []
     private var genresCollectionView: UICollectionView
-    private var genreViewModel: GenreListViewModelProtocol
+    private var genreViewModel: GenreListViewModel
     internal var genreDict : [Int : String] = [:]
     var url : String
-    init(genresCollectionView : UICollectionView,genreViewModel : GenreListViewModelProtocol,url : String){
+    init(genresCollectionView : UICollectionView,genreViewModel : GenreListViewModel,url : String){
         self.genresCollectionView = genresCollectionView
         self.genreViewModel = genreViewModel
         self.url = url

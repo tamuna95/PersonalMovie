@@ -7,18 +7,14 @@
 
 import Foundation
 
-protocol VideoListViewModelProtocol: AnyObject {
-    func getVideoList(url : String,completion: @escaping (([VideoViewModel]) -> Void))
-    
-    init(with videoManager: TaskManagerProtocol)
-}
 
+class VideoListViewModel : MovieListViewModelProtocol {
+    typealias T = VideoViewModel
     
-class VideoListViewModel : VideoListViewModelProtocol {
     let videosManager : TaskManagerProtocol
     
     
-    func getVideoList(url: String, completion: @escaping (([VideoViewModel]) -> Void)) {
+    func getList(url: String, completion: @escaping (([VideoViewModel]) -> Void)) {
         videosManager.fetchMovies(url: url) { (video : VideoModel) in
             DispatchQueue.main.async {
                 let videosViewModels = video.results.map {VideoViewModel(video: $0)}

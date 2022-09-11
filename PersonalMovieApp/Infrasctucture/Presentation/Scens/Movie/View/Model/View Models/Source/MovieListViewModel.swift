@@ -8,13 +8,17 @@
 import Foundation
 
 protocol MovieListViewModelProtocol: AnyObject {
-    func getList(url : String,completion: @escaping (([MovieViewModel]) -> Void))
+    associatedtype T
+    
+    func getList(url : String,completion: @escaping (([T]) -> Void))
     
     init(with moviesManager: TaskManagerProtocol)
 }
 
 
 class MovieListViewModel : MovieListViewModelProtocol {
+    typealias T = MovieViewModel
+    
     required init(with moviesManager: TaskManagerProtocol) {
         self.moviesManager = moviesManager
         

@@ -11,10 +11,10 @@ import Cosmos
 class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var similarMovieCollectionView: UICollectionView!
-    private var genreViewModel : GenreListViewModelProtocol!
+    private var genreViewModel : GenreListViewModel!
     private var genreManager: TaskManagerProtocol!
     private var dataSource : GenreDataSource!
-    private var similarviewModel: MovieListViewModelProtocol!
+    private var similarviewModel: MovieListViewModel!
     private var similarMoviedataSource: SimilarMovieDataSource!
     private var moviesManager: TaskManagerProtocol!
     
@@ -27,7 +27,7 @@ class MovieDetailViewController: UIViewController {
     var movieImageField = " "
     var moviesId : Int = 0
 
-    var videoViewModel : VideoListViewModelProtocol!
+    var videoViewModel : VideoListViewModel!
     var videoList : [VideoViewModel] = []
     var movieKey : String = " "
     let queue = DispatchQueue(label: "firstQueue")
@@ -76,7 +76,7 @@ class MovieDetailViewController: UIViewController {
 
     
     private func getVideoKeyArray(url : String) {
-        videoViewModel.getVideoList(url: url, completion: {[weak self] video in
+        videoViewModel.getList(url: url, completion: {[weak self] video in
             self?.videoList.append(contentsOf: video)
             if let key = self?.videoList.first?.videoKey {
                 self?.movieKey = key

@@ -10,12 +10,12 @@ import UIKit
 class SimilarMovieDataSource : NSObject  {
     
     private var similarMovieCollectionView : UICollectionView
-    private var similarMoviesViewModel: MovieListViewModelProtocol
+    private var similarMoviesViewModel: MovieListViewModel
     var similarMoviesList: [MovieViewModel] = []
     var obj = MovieDetailViewController()
     
     
-    init(similarMovieCollectionView: UICollectionView, similarMoviesViewModel: MovieListViewModelProtocol){
+    init(similarMovieCollectionView: UICollectionView, similarMoviesViewModel: MovieListViewModel){
         self.similarMovieCollectionView = similarMovieCollectionView
         self.similarMoviesViewModel = similarMoviesViewModel
         super.init()

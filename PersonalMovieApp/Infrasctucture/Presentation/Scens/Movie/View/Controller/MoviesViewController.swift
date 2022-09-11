@@ -21,7 +21,7 @@ class MoviesViewController: UIViewController {
     
     //   MARK: - Components
     private var searchBar : UISearchBar!
-    private var viewModel: MovieListViewModelProtocol!
+    private var viewModel: MovieListViewModel!
     private var dataSource: MoviesDataSource!
     private var moviesManager: TaskManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
