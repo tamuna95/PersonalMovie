@@ -10,12 +10,12 @@ import Foundation
 protocol VideoListViewModelProtocol: AnyObject {
     func getVideoList(url : String,completion: @escaping (([VideoViewModel]) -> Void))
     
-    init(with videoManager: MoviesManagerProtocol)
+    init(with videoManager: TaskManagerProtocol)
 }
 
     
 class VideoListViewModel : VideoListViewModelProtocol {
-    let videosManager : MoviesManagerProtocol
+    let videosManager : TaskManagerProtocol
     
     
     func getVideoList(url: String, completion: @escaping (([VideoViewModel]) -> Void)) {
@@ -27,7 +27,7 @@ class VideoListViewModel : VideoListViewModelProtocol {
             
         }
     }
-    required init(with videosManager: MoviesManagerProtocol) {
+    required init(with videosManager: TaskManagerProtocol) {
         self.videosManager = videosManager
     }
     

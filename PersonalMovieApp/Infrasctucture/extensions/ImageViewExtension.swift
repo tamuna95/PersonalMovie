@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImageView {
     
-    public func imageFromWeb(urlString : String, placeHolderImage : UIImage) {
+    public func imageFromWeb(urlString : String, placeHolderImage : UIImage = UIImage(named: "placeholder.png")!) {
 
             self.image = placeHolderImage
         var url = NSURL(string: urlString)

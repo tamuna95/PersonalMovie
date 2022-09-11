@@ -10,17 +10,17 @@ import Foundation
 protocol MovieListViewModelProtocol: AnyObject {
     func getList(url : String,completion: @escaping (([MovieViewModel]) -> Void))
     
-    init(with moviesManager: MoviesManagerProtocol)
+    init(with moviesManager: TaskManagerProtocol)
 }
 
 
 class MovieListViewModel : MovieListViewModelProtocol {
-    required init(with moviesManager: MoviesManagerProtocol) {
+    required init(with moviesManager: TaskManagerProtocol) {
         self.moviesManager = moviesManager
         
     }
     
-    let moviesManager : MoviesManagerProtocol
+    let moviesManager : TaskManagerProtocol
     
     func getList(url: String,completion: @escaping (([MovieViewModel]) -> Void)) {
         

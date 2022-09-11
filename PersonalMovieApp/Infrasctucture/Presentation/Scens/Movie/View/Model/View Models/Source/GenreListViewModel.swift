@@ -10,15 +10,15 @@ import Foundation
 protocol GenreListViewModelProtocol: AnyObject {
     func getList(url : String,completion: @escaping (([GenreViewModel]) -> Void))
     
-    init(with genreManager: MoviesManagerProtocol)
+    init(with genreManager: TaskManagerProtocol)
 }
 
 class GenreListViewModel : GenreListViewModelProtocol {
-    required init(with genreManager: MoviesManagerProtocol) {
+    required init(with genreManager: TaskManagerProtocol) {
         self.genreManager = genreManager
     }
     
-    let genreManager : MoviesManagerProtocol
+    let genreManager : TaskManagerProtocol
     func getList(url: String, completion: @escaping (([GenreViewModel]) -> Void)) {
         genreManager.fetchMovies(url : url) { (genre : GenreModel) in
             DispatchQueue.main.async {

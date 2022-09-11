@@ -28,7 +28,7 @@ class MoviesTableViewCell: UITableViewCell {
         movieTitleLabel.text = item.title
         imdbLabel.text = String(item.imdb)
         releaseDateLabel.text = "Release Date: \(item.releaseDate)"
-        MovieImageView.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(item.posterPath)", placeHolderImage: UIImage(named: "placeholder.png")!)
+        MovieImageView.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(item.posterPath)")
         ratinngCosmosView.rating = item.imdb / 2
         
         disableRating()

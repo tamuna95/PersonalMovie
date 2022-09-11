@@ -12,11 +12,11 @@ class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var similarMovieCollectionView: UICollectionView!
     private var genreViewModel : GenreListViewModelProtocol!
-    private var genreManager: MoviesManagerProtocol!
+    private var genreManager: TaskManagerProtocol!
     private var dataSource : GenreDataSource!
     private var similarviewModel: MovieListViewModelProtocol!
     private var similarMoviedataSource: SimilarMovieDataSource!
-    private var moviesManager: MoviesManagerProtocol!
+    private var moviesManager: TaskManagerProtocol!
     
     var selectedMovieGenres : [Int] = []
     var genresName :[String] = []
@@ -61,15 +61,15 @@ class MovieDetailViewController: UIViewController {
     }
     
     func configure(){
-        let videoManager = LoadVideo()
+        let videoManager = TaskManager()
         videoViewModel = VideoListViewModel(with: videoManager)
     }
     private func configureViewModel() {
         
-        genreManager = GenresManager()
+        genreManager = TaskManager()
         genreViewModel = GenreListViewModel(with: genreManager)
         dataSource = GenreDataSource(genresCollectionView: genreCollectionView, genreViewModel: genreViewModel, url: Links.genreUrl.rawValue)
-        moviesManager = MoviesManager()
+        moviesManager = TaskManager()
         similarviewModel = MovieListViewModel(with: moviesManager)
         dataSource.refresh()
         similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)

@@ -20,17 +20,17 @@ class MoviesDataSource : NSObject {
     private var moviesTableView: UITableView
     private var moviesViewModel: MovieListViewModelProtocol
     var moviesList: [MovieViewModel] = []
-    private var urlItems : String
+//    private var urlItems : String
     var filteredMovies: [MovieViewModel] = []
     var searching = false
     var passingDataDelegate : PassingDataProtocol!
     var movieId : Int = 0
     
     
-    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,urlItems : String,movieSearchBar : UISearchBar){
+    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModelProtocol,movieSearchBar : UISearchBar){
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
-        self.urlItems = urlItems
+//        self.urlItems = urlItems
         self.movieSearchBar = movieSearchBar
         super.init()
         setUpDelegates()
@@ -41,7 +41,7 @@ class MoviesDataSource : NSObject {
         self.moviesTableView.delegate = self
     }
     
-    func refresh(url : String) {
+    func refresh(url : String,movieSearchBar: UISearchBar) {
         moviesViewModel.getList(url: url, completion: { movie in
             self.moviesList.append(contentsOf: movie)
             self.moviesTableView.reloadData()

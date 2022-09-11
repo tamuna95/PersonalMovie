@@ -23,15 +23,16 @@ class MoviesViewController: UIViewController {
     private var searchBar : UISearchBar!
     private var viewModel: MovieListViewModelProtocol!
     private var dataSource: MoviesDataSource!
-    private var moviesManager: MoviesManagerProtocol!
+    private var moviesManager: TaskManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
-    
+    private var buttonIsSelected : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        moviesManager = TaskManager()
+        viewModel = MovieListViewModel(with: moviesManager)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         designButton()
-        configureViewModel()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
-        moviesTableView.refreshControl = UIRefreshControl()
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
     }
     func designButton(){
@@ -39,37 +40,30 @@ class MoviesViewController: UIViewController {
         nowPlayingLabel.layer.cornerRadius = 10
         topRatedLabel.layer.cornerRadius = 10
     }
-    //    MARK: - Set Up functions
-    
-    private func configureMovie(){
-        moviesManager = MoviesManager()
-        viewModel = MovieListViewModel(with: moviesManager)
+    func buttonDidTap(button : UIButton){
+        button.isSelected = !button.isSelected
+       
     }
-    private func configureViewModel() {
-        configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
-    }
+
     //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
-        configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie)
-        dataSource.refresh(url: Links.baseUrl.rawValue + "popular")
+        print("PRINT",dataSource.moviesList[0].title)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
+        dataSource.refresh(url: Links.baseUrl.rawValue + "popular",movieSearchBar: searchMovie)
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
-        configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "top_rated", movieSearchBar: searchMovie)
+      dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated")
+        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated",movieSearchBar: searchMovie)
+
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
-        configureMovie()
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, urlItems: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie)
-        print("print",self)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing")
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
     }
     
 }
