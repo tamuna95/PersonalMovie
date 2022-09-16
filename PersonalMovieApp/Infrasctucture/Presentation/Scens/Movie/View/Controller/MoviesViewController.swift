@@ -13,6 +13,9 @@ import TinyConstraints
 class MoviesViewController: UIViewController {
     
     //    MARK: - Outlets
+    @IBOutlet weak var latestMovieOverview: UILabel!
+    @IBOutlet weak var latestMovieTitle: UILabel!
+    @IBOutlet weak var latestMovieimageView: UIImageView!
     @IBOutlet weak var searchMovie: UISearchBar!
     @IBOutlet weak var popularLabel: UIButton!
     @IBOutlet weak var topRatedLabel: UIButton!
@@ -25,15 +28,37 @@ class MoviesViewController: UIViewController {
     private var dataSource: MoviesDataSource!
     private var moviesManager: TaskManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
+    var latestMovie : GetLatestMovie!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         moviesManager = TaskManager()
         viewModel = MovieListViewModel(with: moviesManager)
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
+        latestMovie = GetLatestMovie(with: moviesManager)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
         designButton()
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
+        fetchLatestMovie(url: Links.baseUrl.rawValue + "latest")
+
         dataSource.passingDataDelegate = self
+    }
+    func fetchLatestMovie(url : String) {
+        latestMovie.getList(url: url, completion: { [weak self] movie in
+            self?.latestMovieTitle.text = movie.title
+            print("PRINT",self?.latestMovieTitle.text!)
+            if movie.posterPath == nil && self?.latestMovieOverview.text != " "{
+                self?.latestMovieimageView.isHidden = true
+                self?.latestMovieOverview.text = movie.overview
+//                self?.latestMovieOverview.isHidden = false
+            }
+            else {
+                self?.latestMovieimageView.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
+                self?.latestMovieOverview.isHidden = true
+
+            }
+            
+        })
+                            
     }
     func designButton(){
         popularLabel.layer.cornerRadius = 10
@@ -48,24 +73,23 @@ class MoviesViewController: UIViewController {
     //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
         print("PRINT",dataSource.moviesList[0].title)
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "popular",movieSearchBar: searchMovie)
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
-      dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated",movieSearchBar: searchMovie)
 
     }
     
     @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
     }
-    
 }
 
 

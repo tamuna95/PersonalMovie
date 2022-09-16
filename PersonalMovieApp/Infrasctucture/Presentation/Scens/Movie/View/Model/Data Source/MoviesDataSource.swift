@@ -24,12 +24,14 @@ class MoviesDataSource : NSObject {
     var searching = false
     var passingDataDelegate : PassingDataProtocol!
     var movieId : Int = 0
+    var latestMovie : GetLatestMovie
     
-    
-    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModel,movieSearchBar : UISearchBar){
+    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModel,movieSearchBar : UISearchBar,latestMovie : GetLatestMovie){
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
         self.movieSearchBar = movieSearchBar
+        self.latestMovie = latestMovie
+        
         super.init()
         setUpDelegates()
     }
@@ -40,11 +42,14 @@ class MoviesDataSource : NSObject {
     }
     
     func refresh(url : String,movieSearchBar: UISearchBar) {
-        moviesViewModel.getList(url: url, completion: { movie in
-            self.moviesList.append(contentsOf: movie)
-            self.moviesTableView.reloadData()
+        moviesViewModel.getList(url: url, completion: { [weak self] movie in
+            self!.moviesList = movie
+            print("Movielist",self!.moviesList.first!.title)
+            print("URL",url)
+            self!.moviesTableView.reloadData()
         })
     }
+    
 }
 
 // MARK: -DataSource class extensions
@@ -97,9 +102,11 @@ extension MoviesDataSource : UITableViewDataSource {
 //MARK: -Protocol for Search Bar
 extension MoviesDataSource : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searching = true
+//        refresh(url: Links.searchMovie.rawValue + "/query=\(movieSearchBar.text!)", movieSearchBar: movieSearchBar)
         filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
         print(filteredMovies)
-        searching = true
+        
         moviesTableView.reloadData()
     }
     

@@ -11,6 +11,7 @@ import Foundation
 enum Links : String {
     case baseUrl = "https://api.themoviedb.org/3/movie/"
     case genreUrl = "https://api.themoviedb.org/3/genre/movie/list"
+    case searchMovie = "https://api.themoviedb.org/3/search/movie"
 }
 
 class NetworkManager {
@@ -46,6 +47,7 @@ class NetworkManager {
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decoded))
+                print("URL",String(url.path))
             } catch {
                 print("Error: \(error)")
             }

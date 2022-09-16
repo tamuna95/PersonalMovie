@@ -26,7 +26,7 @@ class MovieDetailViewController: UIViewController {
     var movieRateField = 0.0
     var movieImageField = " "
     var moviesId : Int = 0
-
+    
     var videoViewModel : VideoListViewModel!
     var videoList : [VideoViewModel] = []
     var movieKey : String = " "
@@ -54,7 +54,7 @@ class MovieDetailViewController: UIViewController {
         queue.async {
             self.getVideoKeyArray(url: Links.baseUrl.rawValue + "\(self.moviesId)/videos")
             
-    }
+        }
     }
     @IBAction func videoPlayButtonDidTap(_ sender: Any) {
         displayVideoVC()
@@ -72,8 +72,8 @@ class MovieDetailViewController: UIViewController {
         similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
         similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
     }
-
-
+    
+    
     
     private func getVideoKeyArray(url : String) {
         videoViewModel.getList(url: url, completion: {[weak self] video in
