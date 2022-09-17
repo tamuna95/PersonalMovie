@@ -22,7 +22,7 @@ class GenreDataSource : NSObject {
         self.url = url
         super.init()
     }
-   
+    
     
     func refresh() {
         genreViewModel.getList(url: url, completion: {[weak self] genre in
@@ -41,7 +41,7 @@ class GenreDataSource : NSObject {
         })
     }
     
-   
+    
 }
 
 

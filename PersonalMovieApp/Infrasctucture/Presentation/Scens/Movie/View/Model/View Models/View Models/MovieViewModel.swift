@@ -8,8 +8,8 @@
 import Foundation
 
 class MovieViewModel {
-   private var isLoading: Bool = false
-   private  var movie : MovieModel
+    private var isLoading: Bool = false
+    private  var movie : MovieModel
     init(movie : MovieModel){
         self.movie = movie
         
@@ -36,5 +36,5 @@ class MovieViewModel {
     var movieID : Int {
         movie.movieID
     }
-
+    
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TJz-Va-UHA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oG1-Mz-ZdK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -189,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="944.92753623188412" y="97.767857142857139"/>
+            <point key="canvasLocation" x="2765.217391304348" y="97.767857142857139"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="Tlw-kc-Zy4">
@@ -237,10 +237,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Fg-zE-QhZ">
-                                                                <rect key="frame" x="351" y="0.0" width="43" height="50"/>
+                                                                <rect key="frame" x="348.5" y="0.0" width="45.5" height="50"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" image="bookmark.fill" catalog="system"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="favouriteButtonDidTap:" destination="up6-Zp-YgG" eventType="touchUpInside" id="om0-zR-UQ5"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -448,36 +451,35 @@
                         <outlet property="movieOverview" destination="tcd-9T-lfc" id="TuE-Mm-5Rp"/>
                         <outlet property="movieRate" destination="5Er-Dj-4Z7" id="SYH-Mx-ZIT"/>
                         <outlet property="similarMovieCollectionView" destination="0mW-ZX-SC1" id="qD4-OK-pQf"/>
+                        <outlet property="toggleButton" destination="5Fg-zE-QhZ" id="xtf-57-rgn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7D-BJ-nnC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953.6231884057972" y="97.767857142857139"/>
+            <point key="canvasLocation" x="3772.4637681159425" y="97.767857142857139"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="cBX-Dt-4Py">
+        <scene sceneID="ZBX-4D-HgQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TJz-Va-UHA" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oG1-Mz-ZdK" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="bN6-k1-kZr"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HAy-P7-ofG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gGx-kq-VbN">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" systemColor="systemOrangeColor"/>
-                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="e3I-Px-SHX"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ddg-7o-Uyr"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mvK-Ra-Y4c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PWo-FA-H9M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="34.782608695652179" y="97.767857142857139"/>
+            <point key="canvasLocation" x="1855.072463768116" y="97.767857142857139"/>
         </scene>
     </scenes>
     <resources>
-        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <image name="placeholder" width="800" height="600"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <systemColor name="systemBackgroundColor">
@@ -488,9 +490,6 @@
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

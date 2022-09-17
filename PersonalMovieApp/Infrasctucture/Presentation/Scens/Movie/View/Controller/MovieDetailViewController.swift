@@ -10,6 +10,7 @@ import Cosmos
 
 class MovieDetailViewController: UIViewController {
     
+    @IBOutlet weak var toggleButton: UIButton!
     @IBOutlet weak var similarMovieCollectionView: UICollectionView!
     private var genreViewModel : GenreListViewModel!
     private var genreManager: TaskManagerProtocol!
@@ -17,7 +18,6 @@ class MovieDetailViewController: UIViewController {
     private var similarviewModel: MovieListViewModel!
     private var similarMoviedataSource: SimilarMovieDataSource!
     private var moviesManager: TaskManagerProtocol!
-    
     var selectedMovieGenres : [Int] = []
     var genresName :[String] = []
     var movieImdbField = " "
@@ -26,11 +26,19 @@ class MovieDetailViewController: UIViewController {
     var movieRateField = 0.0
     var movieImageField = " "
     var moviesId : Int = 0
-    
     var videoViewModel : VideoListViewModel!
     var videoList : [VideoViewModel] = []
     var movieKey : String = " "
     let queue = DispatchQueue(label: "firstQueue")
+    var movieViewModel : MovieViewModel!
+    var likes : Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "likes")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "likes")
+        }
+    }
     // MARK: - Outlets
     @IBOutlet weak var genreCollectionView: UICollectionView!
     @IBOutlet weak var movieOverview: UILabel!
@@ -40,25 +48,34 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieImage: UIImageView!
     
     //MARK: - SetUp
-    
     override func viewDidLoad() {
+        toggleLikeButton()
         configureViewModel()
-        print("print",moviesId)
+        fieldsImplementation()
         super.viewDidLoad()
-        movieImdb.text = movieImdbField
-        movieName.text = movieNameFiled
-        movieOverview.text = movieOverviewField
-        movieRate.rating = movieRateField
-        movieImage.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movieImageField)", placeHolderImage: UIImage(named: "placeholder.png")!)
         
         queue.async {
             self.getVideoKeyArray(url: Links.baseUrl.rawValue + "\(self.moviesId)/videos")
             
         }
     }
+    
+    //    MARK: Action Buttons
+    
     @IBAction func videoPlayButtonDidTap(_ sender: Any) {
-        displayVideoVC()
+        let sb = UIStoryboard(name: "VideoPlayer", bundle: nil)
+        let vc = sb.instantiateViewController(identifier: "PlayerViewController") as! PlayerViewController
+        vc.key = movieKey
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: false, completion: nil)    }
+    
+    @IBAction func favouriteButtonDidTap(_ sender: Any) {
+        self.likes = !self.toggleButton.isSelected
+        self.toggleButton.isSelected = self.likes
+        print(movieViewModel.title)
+        
     }
+    //    MARK: Private functions
     
     private func configureViewModel() {
         let videoManager = TaskManager()
@@ -71,9 +88,21 @@ class MovieDetailViewController: UIViewController {
         dataSource.refresh()
         similarMoviedataSource = SimilarMovieDataSource(similarMovieCollectionView: similarMovieCollectionView, similarMoviesViewModel: similarviewModel)
         similarMoviedataSource.refresh(url: Links.baseUrl.rawValue + "\(moviesId)/similar")
+        
     }
-    
-    
+    private func fieldsImplementation(){
+        movieImdb.text = movieImdbField
+        movieName.text = movieNameFiled
+        movieOverview.text = movieOverviewField
+        movieRate.rating = movieRateField
+        movieImage.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movieImageField)", placeHolderImage: UIImage(named: "placeholder.png")!)
+    }
+    private func toggleLikeButton(){
+        self.toggleButton.isSelected = self.likes
+        self.toggleButton.setTitle("Like", for: .normal)
+        self.toggleButton.setTitle("Liked", for: .selected)
+        self.toggleButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    }
     
     private func getVideoKeyArray(url : String) {
         videoViewModel.getList(url: url, completion: {[weak self] video in
@@ -85,16 +114,6 @@ class MovieDetailViewController: UIViewController {
                 print("Key not found")
             }
         })
-    }
-    private func displayVideoVC (){
-        let sb = UIStoryboard(name: "VideoPlayer", bundle: nil)
-        let vc = sb.instantiateViewController(identifier: "PlayerViewController") as! PlayerViewController
-        vc.key = movieKey
-        print("movieKey \(movieKey)")
-        print("VC KEY \(vc.key)")
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
-        
     }
     
     private func getGenre(){

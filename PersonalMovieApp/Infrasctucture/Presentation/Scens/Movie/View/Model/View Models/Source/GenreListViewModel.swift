@@ -11,7 +11,7 @@ import Foundation
 
 class GenreListViewModel : MovieListViewModelProtocol {
     typealias T = GenreViewModel
-
+    
     required init(with genreManager: TaskManagerProtocol) {
         self.genreManager = genreManager
     }

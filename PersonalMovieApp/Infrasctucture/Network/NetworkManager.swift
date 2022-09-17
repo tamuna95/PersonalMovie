@@ -20,7 +20,9 @@ class NetworkManager {
         urlComponent?.queryItems =  [
             URLQueryItem(name: "api_key", value: "849449c28f7f0fcd751e99e02fa006d6"),
             URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1")
+            URLQueryItem(name: "page", value: "1"),
+//            URLQueryItem(name: "query", value: "query")
+
         ]
         var request = URLRequest(url: (urlComponent?.url!)!)
         request.httpMethod = "GET"

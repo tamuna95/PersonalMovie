@@ -44,7 +44,7 @@ extension SimilarMovieDataSource : UICollectionViewDelegate,UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var similarMovie = similarMoviesList[indexPath.row]
-
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarMovieCell", for: indexPath) as? SimilarMovieCell else { return UICollectionViewCell() }
         cell.configure(with: similarMovie)
         return cell

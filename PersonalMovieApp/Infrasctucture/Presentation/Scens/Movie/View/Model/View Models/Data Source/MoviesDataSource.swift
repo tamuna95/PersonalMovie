@@ -41,8 +41,6 @@ class MoviesDataSource : NSObject {
     func refresh(url : String,movieSearchBar: UISearchBar) {
         moviesViewModel.getList(url: url, completion: { [weak self] movie in
             self!.moviesList = movie
-            print("Movielist",self!.moviesList.first!.title)
-            print("URL",url)
             self!.moviesTableView.reloadData()
         })
     }
@@ -86,7 +84,7 @@ extension MoviesDataSource : UITableViewDataSource {
         }
         cell.configure(with: movie)
         movieSearchBar.delegate = self
-
+        
         return cell
     }
     
@@ -100,9 +98,9 @@ extension MoviesDataSource : UITableViewDataSource {
 extension MoviesDataSource : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        refresh(url: Links.searchMovie.rawValue + "/query=\(movieSearchBar.text!)", movieSearchBar: movieSearchBar)
-//        filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
-//        print(filteredMovies)
+        //        refresh(url: Links.searchMovie.rawValue, movieSearchBar: movieSearchBar)
+        filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
+        print(filteredMovies)
         
         moviesTableView.reloadData()
     }
