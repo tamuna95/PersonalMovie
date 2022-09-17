@@ -13,82 +13,72 @@ import TinyConstraints
 class MoviesViewController: UIViewController {
     
     //    MARK: - Outlets
-    @IBOutlet weak var latestMovieOverview: UILabel!
-    @IBOutlet weak var latestMovieTitle: UILabel!
-    @IBOutlet weak var latestMovieimageView: UIImageView!
     @IBOutlet weak var searchMovie: UISearchBar!
     @IBOutlet weak var popularLabel: UIButton!
     @IBOutlet weak var topRatedLabel: UIButton!
     @IBOutlet weak var nowPlayingLabel: UIButton!
     @IBOutlet weak var moviesTableView: UITableView!
-    
+    @IBOutlet weak var loadingView: UIView! {
+      didSet {
+        loadingView.layer.cornerRadius = 6
+      }
+    }
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     //   MARK: - Components
     private var searchBar : UISearchBar!
     private var viewModel: MovieListViewModel!
     private var dataSource: MoviesDataSource!
     private var moviesManager: TaskManagerProtocol!
     private var searchBarDelegate : UISearchResultsUpdating!
-    var latestMovie : GetLatestMovie!
-    
+
     override func viewDidLoad() {
-        super.viewDidLoad()
+        showSpinner()
         moviesManager = TaskManager()
         viewModel = MovieListViewModel(with: moviesManager)
-        latestMovie = GetLatestMovie(with: moviesManager)
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         designButton()
         dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
-        fetchLatestMovie(url: Links.baseUrl.rawValue + "latest")
-
+        self.hideSpinner()
         dataSource.passingDataDelegate = self
     }
-    func fetchLatestMovie(url : String) {
-        latestMovie.getList(url: url, completion: { [weak self] movie in
-            self?.latestMovieTitle.text = movie.title
-            print("PRINT",self?.latestMovieTitle.text!)
-            if movie.posterPath == nil && self?.latestMovieOverview.text != " "{
-                self?.latestMovieimageView.isHidden = true
-                self?.latestMovieOverview.text = movie.overview
-//                self?.latestMovieOverview.isHidden = false
-            }
-            else {
-                self?.latestMovieimageView.imageFromWeb(urlString: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
-                self?.latestMovieOverview.isHidden = true
-
-            }
-            
-        })
-                            
+    private func showSpinner() {
+        activityIndicator.startAnimating()
+        loadingView.isHidden = false
     }
-    func designButton(){
+
+    private func hideSpinner() {
+        activityIndicator.stopAnimating()
+        loadingView.isHidden = true
+    }
+
+    private func designButton(){
         popularLabel.layer.cornerRadius = 10
         nowPlayingLabel.layer.cornerRadius = 10
         topRatedLabel.layer.cornerRadius = 10
     }
-    func buttonDidTap(button : UIButton){
-        button.isSelected = !button.isSelected
-       
-    }
 
     //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
-        print("PRINT",dataSource.moviesList[0].title)
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "popular",movieSearchBar: searchMovie)
+    }
+    
+    @IBAction func nowPlayingButton(_ sender: Any) {
         
     }
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated",movieSearchBar: searchMovie)
 
     }
     
-    @IBAction func nowPlayingButtonDidTap(_ sender: Any) {
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie,latestMovie : latestMovie)
+    @IBAction func upcomingButtonDidTap(_ sender: Any) {
+        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
+        dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming",movieSearchBar: searchMovie)
     }
 }
 

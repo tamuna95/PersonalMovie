@@ -21,7 +21,6 @@ class PlayerViewController: UIViewController, YTPlayerViewDelegate{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     @IBAction func closeButtonDidTap(_ sender: Any) {

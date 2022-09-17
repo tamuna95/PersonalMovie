@@ -82,10 +82,8 @@ class MovieDetailViewController: UIViewController {
                 self?.movieKey = key
             }
             else {
-                
                 print("Key not found")
             }
-            
         })
     }
     private func displayVideoVC (){
@@ -99,7 +97,7 @@ class MovieDetailViewController: UIViewController {
         
     }
     
-    func getGenre(){
+    private func getGenre(){
         for i in selectedMovieGenres {
             if dataSource.genreDict.keys.contains(i) {
                 genresName.append(dataSource.genreDict[i]!)
