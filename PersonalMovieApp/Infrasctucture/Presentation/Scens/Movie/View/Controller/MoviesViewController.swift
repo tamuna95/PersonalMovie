@@ -73,7 +73,6 @@ class MoviesViewController: UIViewController {
     @IBAction func upcomingButtonDidTap(_ sender: Any) {
         dataSource.passingDataDelegate = self
         dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming",movieSearchBar: searchMovie)
-        print("hi")
     }
 }
 

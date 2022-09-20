@@ -211,13 +211,13 @@
                                                     <constraint firstAttribute="height" constant="430" id="apW-wM-SLc"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Murder On The Orient Express" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-Ox-6oW">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Murder On The Orient Express" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-Ox-6oW">
                                                 <rect key="frame" x="10" y="285" width="394" height="65"/>
                                                 <color key="backgroundColor" systemColor="systemGray3Color"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="65" id="5yx-zW-WQ8"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

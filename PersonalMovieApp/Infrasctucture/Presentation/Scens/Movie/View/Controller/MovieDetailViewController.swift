@@ -9,9 +9,6 @@ import UIKit
 import Cosmos
 
 class MovieDetailViewController: UIViewController {
-    
-    @IBOutlet weak var toggleButton: UIButton!
-    @IBOutlet weak var similarMovieCollectionView: UICollectionView!
     private var genreViewModel : GenreListViewModel!
     private var genreManager: TaskManagerProtocol!
     private var dataSource : GenreDataSource!
@@ -46,11 +43,11 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieRate: CosmosView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
-    
+    @IBOutlet weak var toggleButton: UIButton!
+    @IBOutlet weak var similarMovieCollectionView: UICollectionView!
     //MARK: - SetUp
     override func viewDidLoad() {
         movieRate.settings.updateOnTouch = false
-
         toggleLikeButton()
         configureViewModel()
         fieldsImplementation()
