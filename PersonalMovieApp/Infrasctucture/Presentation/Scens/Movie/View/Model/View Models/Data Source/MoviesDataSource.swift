@@ -98,10 +98,11 @@ extension MoviesDataSource : UITableViewDataSource {
 extension MoviesDataSource : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        //        refresh(url: Links.searchMovie.rawValue, movieSearchBar: movieSearchBar)
+        guard let text = movieSearchBar.text else {return}
+//        refresh(url: Links.searchMovie.rawValue + "&query=\(text)", movieSearchBar: movieSearchBar)
         filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
         print(filteredMovies)
-        
+//
         moviesTableView.reloadData()
     }
     

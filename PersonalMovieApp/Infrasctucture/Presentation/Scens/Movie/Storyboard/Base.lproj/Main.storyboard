@@ -303,8 +303,8 @@
                                                 <rect key="frame" x="181" y="195" width="60" height="60"/>
                                                 <color key="backgroundColor" red="0.18039215689999999" green="0.066666666669999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="frm-Td-fn9"/>
-                                                    <constraint firstAttribute="width" constant="60" id="hdH-P2-fqO"/>
+                                                    <constraint firstAttribute="width" constant="60" id="8rp-2f-cGY"/>
+                                                    <constraint firstAttribute="height" constant="60" id="L5y-o8-bWP"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>

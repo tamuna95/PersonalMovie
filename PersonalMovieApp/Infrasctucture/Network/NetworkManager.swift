@@ -15,13 +15,13 @@ enum Links : String {
 }
 
 class NetworkManager {
-    func requestApi(url : String)-> URL {
+    func requestApi(url : String, query : String = " ") -> URL {
         var urlComponent = URLComponents(string: url)
         urlComponent?.queryItems =  [
             URLQueryItem(name: "api_key", value: "849449c28f7f0fcd751e99e02fa006d6"),
             URLQueryItem(name: "language", value: "en-US"),
             URLQueryItem(name: "page", value: "1"),
-//            URLQueryItem(name: "query", value: "query")
+            URLQueryItem(name: "query", value: query)
 
         ]
         var request = URLRequest(url: (urlComponent?.url!)!)
@@ -37,8 +37,8 @@ class NetworkManager {
         self.session = urlSession
     }
     
-    func get<T: Codable>(url: String, completion: @escaping ((Result<T, Error>) -> Void)) {
-        let url = requestApi(url: url)
+    func get<T: Codable>(url: String, query : String = "", completion: @escaping ((Result<T, Error>) -> Void)) {
+        let url = requestApi(url: url,query: query)
         
         session.dataTask(with: url) { data, response, error in
             

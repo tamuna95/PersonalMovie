@@ -49,6 +49,8 @@ class MovieDetailViewController: UIViewController {
     
     //MARK: - SetUp
     override func viewDidLoad() {
+        movieRate.settings.updateOnTouch = false
+
         toggleLikeButton()
         configureViewModel()
         fieldsImplementation()
@@ -101,7 +103,7 @@ class MovieDetailViewController: UIViewController {
         self.toggleButton.isSelected = self.likes
         self.toggleButton.setTitle("Like", for: .normal)
         self.toggleButton.setTitle("Liked", for: .selected)
-        self.toggleButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        self.toggleButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
     }
     
     private func getVideoKeyArray(url : String) {
