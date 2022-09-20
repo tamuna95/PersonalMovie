@@ -5,12 +5,11 @@
 //  Created by APPLE on 01.09.22.
 //
 
-import UIKit
 import Cosmos
 import TinyConstraints
+import UIKit
 
-
-class MoviesViewController: UIViewController {
+class MoviesViewController: UIViewController,UISearchBarDelegate {
     
     //    MARK: - Outlets
     @IBOutlet weak var searchMovie: UISearchBar!
@@ -26,21 +25,39 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     //   MARK: - Components
-    private var searchBar : UISearchBar!
+    private var searchBar: UISearchBar!
     private var viewModel: MovieListViewModel!
     private var dataSource: MoviesDataSource!
     private var moviesManager: TaskManagerProtocol!
-    private var searchBarDelegate : UISearchResultsUpdating!
+    private var searchBarDelegate: UISearchResultsUpdating!
     
     override func viewDidLoad() {
         moviesManager = TaskManager()
         viewModel = MovieListViewModel(with: moviesManager)
-        dataSource = MoviesDataSource(moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
+        dataSource = MoviesDataSource(
+            moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         designButton()
         showSpinner()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",movieSearchBar: searchMovie)
-        self.hideSpinner()
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie, completion:
+                            self.hideSpinner
+        )
         dataSource.passingDataDelegate = self
+        searchMovie.delegate = self
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        showSpinner()
+        if searchMovie.text == "" ||  searchMovie.text == nil {
+            dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchBar, completion:
+                self.hideSpinner)
+        }
+        else {
+            dataSource.refresh(url: Links.searchMovie.rawValue, movieSearchBar: searchBar, completion:
+                self.hideSpinner)
+        }
+        
+        
+        
     }
     //    MARK: private functions
     private func showSpinner() {
@@ -53,7 +70,7 @@ class MoviesViewController: UIViewController {
         loadingView.isHidden = true
     }
     
-    private func designButton(){
+    private func designButton() {
         popularLabel.layer.cornerRadius = 10
         nowPlayingLabel.layer.cornerRadius = 10
         topRatedLabel.layer.cornerRadius = 10
@@ -61,30 +78,35 @@ class MoviesViewController: UIViewController {
     
     //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
-        dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "popular",movieSearchBar: searchMovie)
+        showSpinner()
+        dataSource.refresh(url: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie, completion:             self.hideSpinner)
+        searchMovie.text = ""
     }
     
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
-        dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated",movieSearchBar: searchMovie)
+        showSpinner()
+        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated", movieSearchBar: searchMovie, completion:             self.hideSpinner)
+        searchMovie.text = ""
+
     }
     
     @IBAction func upcomingButtonDidTap(_ sender: Any) {
-        dataSource.passingDataDelegate = self
-        dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming",movieSearchBar: searchMovie)
+        showSpinner()
+        dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming", movieSearchBar: searchMovie, completion:
+                            self.hideSpinner)
+        searchMovie.text = ""
+
     }
 }
 
-
 //MARK: extension for complete passing data protocol
 
-extension MoviesViewController : PassingDataProtocol {
-    func fetchMovie(indexpath: IndexPath) {
+extension MoviesViewController: PassingDataProtocol {
+    func fetchMovieByIndexpath(indexpath: IndexPath) {
         performSegue(withIdentifier: "DetailPage", sender: indexpath)
     }
     
-    func dataTransfer(item : MovieViewModel,segue: UIStoryboardSegue) {
+    func dataTransfer(item: MovieViewModel, segue: UIStoryboardSegue) {
         
         let destinationVC = segue.destination as? MovieDetailViewController
         destinationVC?.movieImdbField = String(item.imdb)
@@ -99,13 +121,8 @@ extension MoviesViewController : PassingDataProtocol {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailPage" {
             let indexPath = sender as! IndexPath
-            if dataSource.searching {
-                dataTransfer(item: dataSource.filteredMovies[indexPath.row],
-                             segue: segue)
-            }
-            else {
-                dataTransfer(item: dataSource.moviesList[indexPath.row], segue: segue)
-            }
+            dataTransfer(item: dataSource.moviesList[indexPath.row], segue: segue)
+            
         }
     }
     

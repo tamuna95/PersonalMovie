@@ -7,12 +7,13 @@
 
 import Foundation
 protocol TaskManagerProtocol: AnyObject {
-    func fetchMovies<T: Codable>(url : String,completion: @escaping ((T) -> Void))
+    func fetchData<T: Codable>(url : String,completion: @escaping ((T) -> Void))
+    func fetchData<T: Codable>(url : String,query: [String:String],completion: @escaping ((T) -> Void))
 }
 
 class TaskManager: TaskManagerProtocol {
-    func fetchMovies<T: Codable>(url: String,completion: @escaping ((T) -> Void)) {
-        NetworkManager.shared.get(url: url) { (result: Result<T, Error>) in
+    func fetchData<T>(url: String, query: [String : String], completion: @escaping ((T) -> Void)) where T : Decodable, T : Encodable {
+        NetworkManager.shared.get(url: url,query: query) { (result: Result<T, Error>) in
             switch result {
             case .success(let movies):
                 completion(movies)
@@ -21,4 +22,10 @@ class TaskManager: TaskManagerProtocol {
             }
         }
     }
+    
+    
+    func fetchData<T: Codable>(url: String,completion: @escaping ((T) -> Void)) {
+        fetchData(url: url,query: [:],completion: completion)
+    }
 }
+

@@ -13,18 +13,18 @@ struct MovieRequest : Codable {
 struct MovieModel: Codable {
     
     let id: [Int]
-    let posterPath: String
+    let posterPath: String?
     var videoPath: String?
     let title: String
-    var releaseDate: String
-    var rating: Double
-    let overview: String
+    var releaseDate: String?
+    var rating: Double?
+    let overview: String?
     let movieID : Int
-    let backdrop : String
+//    let backdrop : String
     private enum CodingKeys: String, CodingKey {
         case id = "genre_ids",
              posterPath = "poster_path",
-             backdrop = "backdrop_path",
+//             backdrop = "backdrop_path",
              videoPath,
              title,
              movieID = "id",

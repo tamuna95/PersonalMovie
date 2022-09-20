@@ -100,7 +100,6 @@
 				18FC741828C0830A00C33143 /* MoviesDataSource.swift */,
 				1826422328C6193400942A11 /* GennreDataSource.swift */,
 				182B799028C8C2850077F6E2 /* SimilarMovieDataSource.swift */,
-				18A7A38628D9D6D5006ABF9B /* DetailMovieDataSource.swift */,
 			);
 			path = "Data Source";
 			sourceTree = "<group>";
@@ -194,6 +193,7 @@
 				18FC73FB28BF9A5100C33143 /* Assets.xcassets */,
 				18A7A38428D9BE52006ABF9B /* MovieIcon.png */,
 				18FC740028BF9A5100C33143 /* Info.plist */,
+				18A7A38628D9D6D5006ABF9B /* DetailMovieDataSource.swift */,
 			);
 			path = PersonalMovieApp;
 			sourceTree = "<group>";

@@ -9,23 +9,21 @@ import Foundation
 import UIKit
 
 protocol PassingDataProtocol {
-    func fetchMovie(indexpath : IndexPath)
-    func prepare(for segue: UIStoryboardSegue,  sender: Any?)
+    func fetchMovieByIndexpath(indexpath: IndexPath)
 }
 
-
-class MoviesDataSource : NSObject {
-    var movieSearchBar : UISearchBar
-    var selectedMovieGenre : [Int] = []
+class MoviesDataSource: NSObject {
+    var movieSearchBar: UISearchBar
+    var selectedMovieGenre: [Int] = []
     private var moviesTableView: UITableView
     private var moviesViewModel: MovieListViewModel
     var moviesList: [MovieViewModel] = []
-    var filteredMovies: [MovieViewModel] = []
-    var searching = false
-    var passingDataDelegate : PassingDataProtocol!
-    var movieId : Int = 0
+    var passingDataDelegate: PassingDataProtocol!
+    var movieId: Int = 0
     
-    init(moviesTableView: UITableView, moviesViewModel: MovieListViewModel,movieSearchBar : UISearchBar){
+    init(
+        moviesTableView: UITableView, moviesViewModel: MovieListViewModel, movieSearchBar: UISearchBar
+    ) {
         self.moviesTableView = moviesTableView
         self.moviesViewModel = moviesViewModel
         self.movieSearchBar = movieSearchBar
@@ -37,54 +35,47 @@ class MoviesDataSource : NSObject {
         self.moviesTableView.dataSource = self
         self.moviesTableView.delegate = self
     }
-    
-    func refresh(url : String,movieSearchBar: UISearchBar) {
-        moviesViewModel.getList(url: url, completion: { [weak self] movie in
-            self!.moviesList = movie
-            self!.moviesTableView.reloadData()
-        })
+    func refresh(url: String, movieSearchBar: UISearchBar,completion : @escaping ()-> Void) {
+        moviesViewModel.getList(
+            url: url,query: ["query" : movieSearchBar.text ?? ""] ,
+            completion: { [weak self] movie in
+                self!.moviesList = movie
+                self!.moviesTableView.reloadData()
+                completion()
+            })
     }
     
 }
 
 // MARK: -DataSource class extensions
 
-extension MoviesDataSource : UITableViewDelegate {
+extension MoviesDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("top rated \(moviesList[indexPath.row].title)")
-        passingDataDelegate.fetchMovie(indexpath: indexPath)
+        passingDataDelegate.fetchMovieByIndexpath(indexpath: indexPath)
         selectedMovieGenre = moviesList[indexPath.row].id
         print(selectedMovieGenre)
         movieId = moviesList[indexPath.row].movieID
         print(movieId)
     }
 }
-extension MoviesDataSource : UITableViewDataSource {
+extension MoviesDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-            return filteredMovies.count
-        }
-        else {
-            return moviesList.count
-        }
+        moviesList.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var movie = moviesList[indexPath.row]
         
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MoviesTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath)
+                as? MoviesTableViewCell
         else {
             fatalError("Cannot dequeue cell with identifier: MovieCell")
         }
-        if searching {
-            movie = filteredMovies[indexPath.row]
-            cell.configure(with: movie)
-            
-        }
-        cell.configure(with: movie)
-        movieSearchBar.delegate = self
         
+        cell.configure(with: movie)        
         return cell
     }
     
@@ -94,16 +85,4 @@ extension MoviesDataSource : UITableViewDataSource {
     
 }
 
-//MARK: -Protocol for Search Bar
-extension MoviesDataSource : UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searching = true
-        guard let text = movieSearchBar.text else {return}
-//        refresh(url: Links.searchMovie.rawValue + "&query=\(text)", movieSearchBar: movieSearchBar)
-        filteredMovies = moviesList.filter{$0.title.prefix(searchText.count) == searchText}
-        print(filteredMovies)
-//
-        moviesTableView.reloadData()
-    }
-    
-}
+

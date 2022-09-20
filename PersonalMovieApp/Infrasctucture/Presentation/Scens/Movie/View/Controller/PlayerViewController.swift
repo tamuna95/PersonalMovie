@@ -8,27 +8,28 @@
 import UIKit
 import youtube_ios_player_helper_swift
 
-class PlayerViewController: UIViewController, YTPlayerViewDelegate{
-    
-    @IBOutlet weak var VideoPlayerView: YTPlayerView!
-    var key : String = " "
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.VideoPlayerView.delegate = self
-        print("Key \(key)")
-        VideoPlayerView.load(videoId: key, playerVars: ["playsinline": "1"])
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    @IBAction func closeButtonDidTap(_ sender: Any) {
-        dismiss(animated: false, completion: nil)
-        
-    }
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        VideoPlayerView.playVideo()
-    }
-    
+class PlayerViewController: UIViewController, YTPlayerViewDelegate {
+
+  @IBOutlet weak var VideoPlayerView: YTPlayerView!
+  var key: String = " "
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.VideoPlayerView.delegate = self
+    print("Key \(key)")
+    VideoPlayerView.load(videoId: key, playerVars: ["playsinline": "1"])
+  }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+  }
+
+  @IBAction func closeButtonDidTap(_ sender: Any) {
+    dismiss(animated: false, completion: nil)
+      VideoPlayerView.stopVideo()
+  }
+  func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+    VideoPlayerView.playVideo()
+  }
+
 }
+

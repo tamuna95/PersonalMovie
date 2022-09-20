@@ -9,7 +9,9 @@ import Foundation
 
 
 
-class MovieListViewModel : MovieListViewModelProtocol {
+class MovieListViewModel : ListViewModelProtocol {
+    
+    
     typealias T = MovieViewModel
     
     required init(with moviesManager: TaskManagerProtocol) {
@@ -19,15 +21,17 @@ class MovieListViewModel : MovieListViewModelProtocol {
     
     let moviesManager : TaskManagerProtocol
     
-    func getList(url: String,completion: @escaping (([MovieViewModel]) -> Void)) {
-        
-        moviesManager.fetchMovies(url : url) { (movie : MovieRequest) in
+    func getList(url: String, query: [String : String], completion: @escaping (([MovieViewModel]) -> Void)) {
+        moviesManager.fetchData(url : url,query: query) { (movie : MovieRequest) in
             DispatchQueue.main.async {
                 let movieViewModels = movie.results.map {MovieViewModel(movie: $0)}
                 completion(movieViewModels)
             }
         }
+        
+    }
+    func getList(url: String,completion: @escaping (([MovieViewModel]) -> Void)) {
+        getList(url: url, query: [:],completion: completion)
     }
 }
-
-
+    

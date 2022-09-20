@@ -18,17 +18,17 @@ class MovieViewModel {
         movie.title
     }
     var imdb : Double {
-        movie.rating
+        movie.rating ?? 0.0
         
     }
     var releaseDate : String {
-        movie.releaseDate
+        movie.releaseDate ?? ""
     }
     var posterPath : String {
-        movie.posterPath
+        movie.posterPath ?? ""
     }
     var overview : String {
-        movie.overview
+        movie.overview ?? ""
     }
     var id : [Int] {
         movie.id

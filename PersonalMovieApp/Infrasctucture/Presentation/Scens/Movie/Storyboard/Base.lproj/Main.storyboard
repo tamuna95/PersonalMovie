@@ -203,7 +203,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="1100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oZ-cu-frn">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1150"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mRH-lF-Hve">
                                                 <rect key="frame" x="10" y="10" width="394" height="430"/>
@@ -332,7 +332,7 @@
                                                 </constraints>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0mW-ZX-SC1">
-                                                <rect key="frame" x="0.0" y="775.5" width="414" height="314.5"/>
+                                                <rect key="frame" x="0.0" y="775.5" width="414" height="364.5"/>
                                                 <color key="backgroundColor" red="0.076063156130000004" green="0.048085212709999998" blue="0.18201828" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0Is-ri-ssR">
                                                     <size key="itemSize" width="271" height="300"/>
@@ -342,7 +342,7 @@
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SimilarMovieCell" id="3oI-Gf-eAi" customClass="SimilarMovieCell" customModule="PersonalMovieApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="22" width="211" height="271"/>
+                                                        <rect key="frame" x="0.0" y="47" width="211" height="271"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JOL-bK-t8l">
                                                             <rect key="frame" x="0.0" y="0.0" width="211" height="271"/>
@@ -411,7 +411,7 @@
                                             <constraint firstAttribute="trailing" secondItem="mRH-lF-Hve" secondAttribute="trailing" constant="10" id="gU4-xk-7cc"/>
                                             <constraint firstItem="EQa-11-0YF" firstAttribute="leading" secondItem="3oZ-cu-frn" secondAttribute="leading" constant="20" id="hah-Bo-auP"/>
                                             <constraint firstAttribute="trailing" secondItem="xmI-yF-r0b" secondAttribute="trailing" constant="20" id="lIu-Q9-Wdk"/>
-                                            <constraint firstAttribute="height" constant="1100" id="lN2-vr-a47"/>
+                                            <constraint firstAttribute="height" constant="1150" id="lN2-vr-a47"/>
                                             <constraint firstAttribute="trailing" secondItem="gw6-97-cqA" secondAttribute="trailing" constant="173" id="mc9-2r-pQE"/>
                                             <constraint firstItem="EQa-11-0YF" firstAttribute="top" secondItem="kIm-GQ-yrL" secondAttribute="bottom" constant="20" id="mfH-Ln-fJp"/>
                                             <constraint firstItem="0mW-ZX-SC1" firstAttribute="top" secondItem="EQa-11-0YF" secondAttribute="bottom" constant="20" id="o0u-7i-SI3"/>
