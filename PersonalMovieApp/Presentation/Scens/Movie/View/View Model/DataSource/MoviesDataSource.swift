@@ -66,7 +66,7 @@ extension MoviesDataSource: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var movie = moviesList[indexPath.row]
+        let movie = moviesList[indexPath.row]
         
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath)
@@ -75,7 +75,7 @@ extension MoviesDataSource: UITableViewDataSource {
             fatalError("Cannot dequeue cell with identifier: MovieCell")
         }
         
-        cell.configure(with: movie)        
+        cell.configure(with: movie)
         return cell
     }
     

@@ -34,7 +34,9 @@ class NetworkManager {
         let urlSessionConfiguration = URLSessionConfiguration.default
         let urlSession = URLSession(configuration: urlSessionConfiguration)
         self.session = urlSession
+        
     }
+    
     
     func get<T: Codable>(url: String, query : [String:String], completion: @escaping ((Result<T, Error>) -> Void)) {
         let url = requestApi(url: url,query: query)

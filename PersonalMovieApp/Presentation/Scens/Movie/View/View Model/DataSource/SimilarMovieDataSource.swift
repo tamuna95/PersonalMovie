@@ -13,7 +13,6 @@ class SimilarMovieDataSource: NSObject {
     private var similarMovieCollectionView: UICollectionView
     private var similarMoviesViewModel: MovieListViewModel
     var similarMoviesList: [MovieViewModel] = []
-    var obj = MovieDetailViewController()
     
     init(similarMovieCollectionView: UICollectionView, similarMoviesViewModel: MovieListViewModel) {
         self.similarMovieCollectionView = similarMovieCollectionView
@@ -49,7 +48,7 @@ extension SimilarMovieDataSource: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
     -> UICollectionViewCell
     {
-        var similarMovie = similarMoviesList[indexPath.row]
+        let similarMovie = similarMoviesList[indexPath.row]
         
         guard
             let cell = collectionView.dequeueReusableCell(

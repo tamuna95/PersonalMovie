@@ -12,12 +12,12 @@ extension UIImageView {
     
     public func imageFromWeb(urlString : String, placeHolderImage : UIImage = UIImage(named: "placeholder.png")!) {
 
-            self.image = placeHolderImage
+        self.image = placeHolderImage
         let url = NSURL(string: urlString)
         if url == nil {
         return
         }
-        URLSession.shared.dataTask(with: url as! URL, completionHandler: { (data,_,error ) -> Void in
+        URLSession.shared.dataTask(with: url! as URL, completionHandler: { (data,_,error ) -> Void in
             if error != nil {
                 self.image = placeHolderImage
                 print(error ?? "No Error")

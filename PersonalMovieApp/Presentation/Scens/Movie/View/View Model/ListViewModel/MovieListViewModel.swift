@@ -34,4 +34,4 @@ class MovieListViewModel : ListViewModelProtocol {
         getList(url: url, query: [:],completion: completion)
     }
 }
-    
+

@@ -6,7 +6,6 @@
 //
 
 import Cosmos
-import TinyConstraints
 import UIKit
 
 class MoviesViewController: UIViewController,UISearchBarDelegate {
@@ -19,7 +18,7 @@ class MoviesViewController: UIViewController,UISearchBarDelegate {
     @IBOutlet weak var moviesTableView: UITableView!
     @IBOutlet weak var loadingView: UIView! {
         didSet {
-            loadingView.layer.cornerRadius = 6
+            loadingView.layer.cornerRadius = 3
         }
     }
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -38,9 +37,8 @@ class MoviesViewController: UIViewController,UISearchBarDelegate {
             moviesTableView: moviesTableView, moviesViewModel: viewModel, movieSearchBar: searchMovie)
         designButton()
         showSpinner()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchMovie, completion:
-                            self.hideSpinner
-        )
+        dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing",
+                           movieSearchBar: searchMovie, completion: self.hideSpinner)
         dataSource.passingDataDelegate = self
         searchMovie.delegate = self
     }
@@ -48,15 +46,12 @@ class MoviesViewController: UIViewController,UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         showSpinner()
         if searchMovie.text == "" ||  searchMovie.text == nil {
-            dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchBar, completion:
-                self.hideSpinner)
+            dataSource.refresh(url: Links.baseUrl.rawValue + "now_playing", movieSearchBar: searchBar, completion: self.hideSpinner)
         }
         else {
-            dataSource.refresh(url: Links.searchMovie.rawValue, movieSearchBar: searchBar, completion:
-                self.hideSpinner)
+            dataSource.refresh(url: Links.searchMovie.rawValue,
+                               movieSearchBar: searchBar, completion: self.hideSpinner)
         }
-        
-        
         
     }
     //    MARK: private functions
@@ -79,23 +74,25 @@ class MoviesViewController: UIViewController,UISearchBarDelegate {
     //    MARK: - Action Buttons
     @IBAction func popularButtonDidTap(_ sender: Any) {
         showSpinner()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "popular", movieSearchBar: searchMovie, completion:             self.hideSpinner)
+        dataSource.refresh(url: Links.baseUrl.rawValue + "popular",
+                           movieSearchBar: searchMovie, completion: self.hideSpinner)
         searchMovie.text = ""
     }
     
     @IBAction func topRatedButtonDidTap(_ sender: Any) {
         showSpinner()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated", movieSearchBar: searchMovie, completion:             self.hideSpinner)
+        dataSource.refresh(url: Links.baseUrl.rawValue + "top_rated",
+                           movieSearchBar: searchMovie, completion : self.hideSpinner)
         searchMovie.text = ""
-
+        
     }
     
     @IBAction func upcomingButtonDidTap(_ sender: Any) {
         showSpinner()
-        dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming", movieSearchBar: searchMovie, completion:
-                            self.hideSpinner)
+        dataSource.refresh(url: Links.baseUrl.rawValue + "upcoming",
+                           movieSearchBar: searchMovie, completion: self.hideSpinner)
         searchMovie.text = ""
-
+        
     }
 }
 

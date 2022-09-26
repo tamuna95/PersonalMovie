@@ -10,7 +10,7 @@ import Foundation
 
 
 class GenreListViewModel : ListViewModelProtocol {
-   
+    
     
     typealias T = GenreViewModel
     
@@ -29,7 +29,7 @@ class GenreListViewModel : ListViewModelProtocol {
     }
     func getList(url: String, query: [String : String], completion: @escaping (([GenreViewModel]) -> Void)) {
         getList(url: url, query: [:],completion: completion)
-
+        
     }
 }
 
